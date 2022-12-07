@@ -83,6 +83,22 @@ CREATE TABLE IF NOT EXISTS GAME
     CONSTRAINT Game_fk2 FOREIGN KEY (UserEmail) REFERENCES USER(UserEmail)
 );
 """
+insert_users="""
+INSERT INTO USER VALUES("admin@gmail.com","admin","2");
+INSERT INTO USER VALUES("mattiaautiero@gmail.com","mattia","2");
+INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio","2");
+"""
+
+insert_questions="""
+INSERT INTO QUESTION VALUES("1","Return the maximum","int a=10, b=11, max=0;","11","2022-12-07 10:04:03","easy","admin@gmail.com");
+INSERT INTO QUESTION VALUES("2","Return the minimum","int a=10, b=11, min=0;","10","2022-12-07 10:03:03","amateur","admin@gmail.com");
+INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3,9,10,19","2022-12-07 10:02:03","hard","admin@gmail.com")
+"""
+
+#SELECT ADDTIME(CURTIME(), '0:5') serve ad aggiungere tempo all ora corrente da ricordare
+insert_games="""
+INSERT INTO GAME VALUES("mattiaautiero@gmail.com","1","100","")
+"""
 connection_server= create_server_connection ("localhost", "root","")
 create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
 create_database(connection_server,create_db_query)
