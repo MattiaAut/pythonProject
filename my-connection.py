@@ -47,7 +47,7 @@ def create_db_connection(host_name, user_name, user_password, db_name):
   return connection_database
 #END OF FUNCTION--------------------------------------------------------------------------
 create_table_user="""
-CREATE TABLE USER
+CREATE TABLE IF NOT EXISTS USER
 (   
     UserEmail   varchar(50)     NOT NULL,
     Username    varchar(20)     NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE USER
 );
 """
 create_table_question="""
-CREATE TABLE QUESTION
+CREATE TABLE IF NOT EXISTS QUESTION
 (   
     QuestionId      int     NOT NULL AUTO_INCREMENT,
     QuestionText    varchar(250)     NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE QUESTION
 );
 """
 create_table_game="""
-CREATE TABLE GAME
+CREATE TABLE IF NOT EXISTS GAME
 (
     UserEmail   varchar(50)     NOT NULL,
     QuestionId  int     NOT NULL,
@@ -84,8 +84,8 @@ CREATE TABLE GAME
 );
 """
 connection_server= create_server_connection ("localhost", "root","")
-create_db_query="CREATE DATABASE frontlinecode"
-#create_database(connection_server,create_db_query)
+create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
+create_database(connection_server,create_db_query)
 connection_database = create_db_connection("localhost", "root", "","frontlinecode")
 execute_query(connection_database, create_table_user)
 execute_query(connection_database, create_table_question)
