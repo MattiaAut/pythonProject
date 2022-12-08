@@ -2,8 +2,11 @@ import os
 import pathlib
 import secrets
 
+import cachecontrol as cachecontrol
 import google.auth.transport.requests
 from flask import Flask, session, abort, redirect, request
+from google.auth.transport import requests
+from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode")
@@ -51,7 +54,9 @@ def callback():
         request=token_request,
         audience=GOOGLE_CLIENT_ID
     )
-    return id_info
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect("/protected_area")
 
 
 
@@ -68,7 +73,7 @@ def index():
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return "protected_area <a href='/logout'><button>Logout</button></a>"
+    return f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
 
 if __name__ == "__main__":
     app.run(debug=True)
