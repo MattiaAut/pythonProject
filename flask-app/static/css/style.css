@@ -1,10 +1,49 @@
+@font-face {
+            font-family: "DisposableDroidBB";
+            src: url("/static/fonts/DisposableDroidBB.ttf");
+}
+button{
+    font-family: "DisposableDroidBB", sans-serif;
+}
 #main-container{
     height:100%;
-    background-color:yellow;
+    background-color:;
 }
 h1{
     color: red;
+    font-family: "DisposableDroidBB", sans-serif;
 }
 h2{
     color: green;
+    font-family: "DisposableDroidBB", sans-serif;
+}
+h3{
+    font-family: "DisposableDroidBB", sans-serif;
+}
+h3{
+    font-family: "DisposableDroidBB", sans-serif;
+}
+h5{
+    font-family: "DisposableDroidBB", sans-serif;
+}
+h6{
+    font-family: "DisposableDroidBB", sans-serif;
+}
+button{
+    font-family: 'Input Sans', sans-serif;
+}
+nav{
+position:absolute;
+top:0;
+left:0;
+right:0;
+}
+
+footer {
+position: absolute;
+bottom:0;
+left: 0;
+width: 100%;
+overflow: hidden;
+color:#fff;
 }
