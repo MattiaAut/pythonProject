@@ -13,12 +13,22 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="pagination justify-content-end" style="width:100%; height:100%">
                 <a class="navbar-brand" href="/"><img src="" width="250" height="35" style="position:absolute; left:0;" alt=""></span></a>
-            <div style="align-items: self-end">
-                <a href='/logout'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>Logout</button></a>
-                <a href='/'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>About us</button></a>
-            </div>
+            <!--<div style="align-items: self-end">
+                    <a href='/'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>About us</button></a>
+                    <a href='/logout'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>Logout</button></a>
+                --!>
+                <div class="dropdown" style="align-items: self-end">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fab fa-facebook-f"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                  </div>
+                </div>
+            <!--</div>--!>
         </div>
-    </nav>
+      </nav>
 
     <div id="main-container">
         <h1 align="center"> Welcome On Frontline Code</h1>
@@ -54,3 +64,4 @@
     </footer>
   </body>
 </html>
+
