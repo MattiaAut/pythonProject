@@ -2,9 +2,7 @@
             font-family: "DisposableDroidBB";
             src: url("/static/fonts/DisposableDroidBB.ttf");
 }
-button{
-    font-family: "DisposableDroidBB", sans-serif;
-}
+
 #main-container{
     height:100%;
     background-color:;
