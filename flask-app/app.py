@@ -2,7 +2,7 @@ import requests
 import os
 import pathlib
 import secrets
-from flask import Flask, session, abort, redirect, request
+from flask import Flask, session, abort, redirect, request, render_template
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
@@ -56,6 +56,7 @@ def callback():
     )
 
     session["google_id"] = id_info.get("sub")
+    session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     return redirect("/protected_area")
 
@@ -66,12 +67,13 @@ def logout():
 
 @app.route("/")
 def index():
-    return "index <a href='/login'><button>Login</button></a>"
+    return render_template('index.html')
 
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
+    #return f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
+    return render_template('protected_area.html',name=session["name"])
 
 if __name__ == "__main__":
     app.run(debug=True)
