@@ -7,6 +7,8 @@ from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
+from datetime import timedelta
+from flask import session, app
 
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode")
@@ -47,6 +49,8 @@ def callback():
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1)
 
     id_info = id_token.verify_oauth2_token(
         id_token=credentials._id_token,
@@ -61,6 +65,7 @@ def callback():
 
 @app.route("/logout")
 def logout():
+    #session["google_id"] = null
     session.clear()
     return redirect("/")
 
@@ -71,7 +76,6 @@ def index():
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    #return f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
     return render_template('protected_area.html',name=session["name"])
 
 if __name__ == "__main__":
