@@ -49,7 +49,7 @@ def callback():
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
-    session.permanent = True
+    session.permanent = True    #vedere come far scegliere all utente un altro account eliminando i cookie  session.clear non basta
     app.permanent_session_lifetime = timedelta(minutes=1)
 
     id_info = id_token.verify_oauth2_token(
@@ -61,6 +61,7 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
+    session["photo"] = id_info.get("picture")
     return redirect("/protected_area")
 
 @app.route("/logout")
@@ -76,7 +77,7 @@ def index():
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return render_template('protected_area.html',name=session["name"])
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"])
 
 if __name__ == "__main__":
     app.run(debug=True)
