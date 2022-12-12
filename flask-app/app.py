@@ -2,7 +2,7 @@ import requests
 import os
 import pathlib
 import secrets
-from flask import Flask, session, abort, redirect, request, render_template
+from flask import Flask, session, abort, redirect, request, render_template, flash
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
@@ -85,7 +85,7 @@ def choose_username():
 @app.route("/check_username", methods=['GET', 'POST'])
 def check_username():
     #if username already used
-        #raise EMError("Username Already used")
+        #raise ("Username Already used")
         #return redirect("/choose_username")
     #else:
         #session["username"]=form_Data
@@ -93,14 +93,17 @@ def check_username():
     error=None
     if request.method == 'POST':
         form_data=request.form.get("username")
-        if(form_data == "admin"):      #se l username gia esiste
-            error="Username already used"
-            return render_template("choose_username.html",error=error)
+    else:
+        form_data=None
 
-        else:
-            session["username"] = form_data
-            #insert user into db
-            return redirect("/protected_area")
+    if(form_data == "admin"):      #se l username gia esiste
+        error = "Username already used"
+        return render_template("choose_username.html",error=error)
+
+    else:
+        session["username"] = form_data
+        #insert user into db
+        return redirect("/protected_area")
 
 @app.route("/protected_area")
 @login_is_required
