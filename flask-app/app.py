@@ -62,11 +62,15 @@ def callback():
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
+    session["username"] = "" #query that search username
+
+    if session["username"] == "":
+        return  redirect("/choose_username")
+
     return redirect("/protected_area")
 
 @app.route("/logout")
 def logout():
-    #session["google_id"] = null
     session.clear()
     return redirect("/")
 
@@ -74,10 +78,35 @@ def logout():
 def index():
     return render_template('index.html')
 
+@app.route("/choose_username")
+def choose_username():
+    return render_template('choose_username.html')
+
+@app.route("/check_username", methods=['GET', 'POST'])
+def check_username():
+    #if username already used
+        #raise EMError("Username Already used")
+        #return redirect("/choose_username")
+    #else:
+        #session["username"]=select
+        #return redirect("/protected_area")
+    if request.method == 'POST':
+        form_data=request.form.get("username")
+        session["username"] = form_data
+        #insert user into db
+        return redirect("/protected_area")
+
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"])
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"],username=session["username"])
+
+@app.route("/protected_area/gameNUMQUESTION")
+def gameNUMQUESTION():
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    else:
+        return render_template('gameNUMQUESTION.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
