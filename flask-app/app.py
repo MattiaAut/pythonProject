@@ -26,10 +26,13 @@ flow= Flow.from_client_secrets_file(
 )
 def login_is_required(function):
     def wrapper(*args, **kwargs):
-        if "google_id" not in session and session["username"]=="":
+        if "google_id" not in session:
             abort(401) #Authorization required
         else:
-            return function()
+            if session["username"] == "":
+                abort(401)
+            else:
+                return function()
     return wrapper
 
 @app.route("/login")
