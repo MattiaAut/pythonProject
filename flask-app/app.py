@@ -105,14 +105,27 @@ def check_username():
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"],username=session["username"])
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"])
 
-@app.route("/protected_area/gameNUMQUESTION")
+@app.route("/gameNUMQUESTION")
 def gameNUMQUESTION():
     if "google_id" not in session:
         abort(401)  # Authorization required
     else:
-        return render_template('gameNUMQUESTION.html')
+        if session["username"] == "":
+            abort(401)
+        else:
+            return render_template('gameNUMQUESTION.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
+
+@app.route("/profile")
+def profile():
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    else:
+        if session["username"] == "":
+            abort(401)
+        else:
+            return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
 
 if __name__ == "__main__":
     app.run(debug=True)
