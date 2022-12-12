@@ -79,7 +79,6 @@ def logout():
 
 @app.route("/")
 def index():
-    print ("google_id")
     return render_template('index.html')
 
 @app.route("/choose_username")
