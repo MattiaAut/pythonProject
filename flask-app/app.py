@@ -26,7 +26,7 @@ flow= Flow.from_client_secrets_file(
 )
 def login_is_required(function):
     def wrapper(*args, **kwargs):
-        if "google_id" not in session:
+        if "google_id" not in session and session["username"]=="":
             abort(401) #Authorization required
         else:
             return function()
@@ -84,22 +84,15 @@ def choose_username():
 
 @app.route("/check_username", methods=['GET', 'POST'])
 def check_username():
-    #if username already used
-        #raise ("Username Already used")
-        #return redirect("/choose_username")
-    #else:
-        #session["username"]=form_Data
-        #return redirect("/protected_area")
     error=None
     if request.method == 'POST':
         form_data=request.form.get("username")
     else:
         form_data=None
 
-    if(form_data == "admin"):      #se l username gia esiste
+    if(form_data == "admin"):      #se l username gia esiste va fatta la query
         error = "Username already used"
         return render_template("choose_username.html",error=error)
-
     else:
         session["username"] = form_data
         #insert user into db

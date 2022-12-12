@@ -29,7 +29,7 @@
 {% if error %}
 <div class="alert warning">
     <span class="closebtn">&times;</span>
-    <strong>INVALID USERNAME:</strong>This username is already used.
+    <strong>INVALID USERNAME:</strong> {{error}}
 </div>
 <script>
 var close = document.getElementsByClassName("closebtn");
