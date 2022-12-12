@@ -27,7 +27,7 @@ flow= Flow.from_client_secrets_file(
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
-            abort(401) #Authorization required
+            abort(401)  #Authorization required
         else:
             if session["username"] == "":
                 abort(401)
@@ -37,7 +37,7 @@ def login_is_required(function):
 
 @app.route("/login")
 def login():
-    authorization_url, state =flow.authorization_url()
+    authorization_url, state = flow.authorization_url()
     session["state"] = state
     return redirect(authorization_url)
 
@@ -46,14 +46,14 @@ def callback():
     flow.fetch_token(authorization_response=request.url)
 
     if not session["state"] == request.args["state"]:
-        abort(500)  # State does not match!
+        abort(500)  #State does not match!
 
     credentials = flow.credentials
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
-    session.permanent = True    #vedere come far scegliere all utente un altro account eliminando i cookie  session.clear non basta
-    app.permanent_session_lifetime = timedelta(minutes=1)
+    #session.permanent = True    vedere come far scegliere all utente un altro account eliminando i cookie  session.clear non basta
+    #app.permanent_session_lifetime = timedelta(minutes=1)
 
     id_info = id_token.verify_oauth2_token(
         id_token=credentials._id_token,
@@ -65,7 +65,7 @@ def callback():
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
-    session["username"] = "" #query that search username
+    session["username"] = ""  #query that search username
 
     if session["username"] == "":
         return  redirect("/choose_username")
@@ -79,6 +79,7 @@ def logout():
 
 @app.route("/")
 def index():
+    print ("google_id")
     return render_template('index.html')
 
 @app.route("/choose_username")
