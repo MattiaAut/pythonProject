@@ -17,13 +17,22 @@
 </head>
 <body style="background-color:black;">
 <center>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 <h2>INSERT AN USERNAME<h2>
 <div class="mh-100" style="width: 350px; height:150px; background-color:#eee; border-style: double;">
 	<form name="first_username_insert" class="needs-validation" METHOD="post" ACTION="/check_username">
 	<div class="form-col">
         <div class="col-md-9 mb-2 ">
 			<label for="username" style="color: deepskyblue;">Username</label>
-			<input type="text"  required class="form-control" name="username"id="username" placeholder="Username" >
+			<input type="text"  required class="form-control" name="username"id="username" placeholder="username" >
             <span id="message1"></span>
         </div>
 		<div>

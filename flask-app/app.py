@@ -88,13 +88,19 @@ def check_username():
         #raise EMError("Username Already used")
         #return redirect("/choose_username")
     #else:
-        #session["username"]=select
+        #session["username"]=form_Data
         #return redirect("/protected_area")
+    error=None
     if request.method == 'POST':
         form_data=request.form.get("username")
-        session["username"] = form_data
-        #insert user into db
-        return redirect("/protected_area")
+        if(form_data == "admin"):      #se l username gia esiste
+            error="Username already used"
+            return render_template("choose_username.html",error=error)
+
+        else:
+            session["username"] = form_data
+            #insert user into db
+            return redirect("/protected_area")
 
 @app.route("/protected_area")
 @login_is_required
