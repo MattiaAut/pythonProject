@@ -80,7 +80,7 @@ def callback():
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT Username FROM USER WHERE USERemail = session["email"]''')
+    cursor.execute('''SELECT Username FROM USER WHERE UserEmail = session["email"]''')
     table = cursor.fetchall()
     cursor.close()
     session["username"] = table.row[0]
@@ -110,7 +110,9 @@ def index():
      #       print(row[2], end="\n")
     #    cursor.close()
 
-
+@app.route("/aboutus")
+def aboutus():
+    return render_template('aboutus.html')
 
 @app.route("/choose_username")
 def choose_username():
