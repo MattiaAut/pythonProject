@@ -2,6 +2,10 @@ import requests
 import os
 import pathlib
 import secrets
+import sqlite3
+import subprocess
+import sys
+import flask_mysqldb
 from flask import Flask, session, abort, redirect, request, render_template, flash
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
@@ -10,9 +14,18 @@ import google.auth.transport.requests
 from datetime import timedelta
 from flask import session, app
 
+from flask_mysqldb import MySQL
+
 secret_key = secrets.token_hex(16)
-app = Flask("FrontlineCode")
+app = Flask("FrontlineCode", template_folder="templates")
 app.config['SECRET_KEY'] = secret_key
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'FrontlineCode'
+
+mysql = MySQL(app)
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 #app.secret.key="CodeSpecialist.com"
 GOOGLE_CLIENT_ID="412052900468-fmptddpq7os5ld3u9bbjpuvm6j35mf6q.apps.googleusercontent.com"
@@ -24,6 +37,8 @@ flow= Flow.from_client_secrets_file(
             "openid"],
     redirect_uri="http://127.0.0.1:5000/callback"
 )
+
+conn = sqlite3.connect("frontlinecode.db") #CONNESSO
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
@@ -65,9 +80,13 @@ def callback():
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
-    session["username"] = ""  #query that search username
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT Username FROM USER WHERE USERemail = session["email"]''')
+    table = cursor.fetchall()
+    cursor.close()
+    session["username"] = table.row[0]
 
-    if session["username"] == "":
+    if session["username"] == NULL:
         return  redirect("/choose_username")
 
     return redirect("/protected_area")
@@ -81,6 +100,19 @@ def logout():
 def index():
     return render_template('index.html')
 
+    #cursor = mysql.connection.cursor()
+    #if cursor:
+        #cursor.execute(''' SELECT * FROM USER''')
+        #table = cursor.fetchall()
+        #print('\n Table Data:')
+        #for row in table:
+       #     print(row[0], end=" ")
+      #      print(row[1], end=" ")
+     #       print(row[2], end="\n")
+    #    cursor.close()
+
+
+
 @app.route("/choose_username")
 def choose_username():
     return render_template('choose_username.html')
@@ -93,11 +125,19 @@ def check_username():
     else:
         form_data=None
 
-    if(form_data == "admin"):      #se l username gia esiste va fatta la query
+    cursor = mysql.connection.cursor()
+    cursor.execute ('''SELECT COUNT (*) AS QUANTITY FROM USER WHERE USERNAME = form_data''')
+    table = cursor.fetchall()
+    cursor.close()
+    if(table.row[0] > 0 ):      #se l username gia esiste va fatta la query
         error = "Username already used"
         return render_template("choose_username.html",error=error)
     else:
         session["username"] = form_data
+        cursor = mysql.connection.cursor()
+        cursor.execute('''INSERT INTO USER VALUES (session["email"],session["username"],"1")''')
+        mysql.connection.commit()
+        cursor.close()
         #insert user into db
         return redirect("/protected_area")
 
@@ -127,4 +167,4 @@ def profile():
             return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='localhost', port=5000)
