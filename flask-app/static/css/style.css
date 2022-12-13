@@ -32,7 +32,7 @@ h6{
 }
 
 button{
-    font-family: 'Input Sans', sans-serif;
+    font-family: 'DisposableDroidBB', sans-serif;
 }
 
 label{
@@ -82,4 +82,12 @@ color:#fff;
 
 .closebtn:hover {
   color: black;
+}
+
+a{
+    font-family: "DisposableDroidBB", sans-serif;
+}
+
+button{
+    font-family: "DisposableDroidBB", sans-serif;
 }

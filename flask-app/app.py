@@ -14,7 +14,7 @@ secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode")
 app.config['SECRET_KEY'] = secret_key
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-#app.secret.key="CodeSpecialist.com"
+# app.secret.key="CodeSpecialist.com"
 GOOGLE_CLIENT_ID="412052900468-fmptddpq7os5ld3u9bbjpuvm6j35mf6q.apps.googleusercontent.com"
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent,"client-secret.json")
 
@@ -68,7 +68,7 @@ def callback():
     session["username"] = ""  #query that search username
 
     if session["username"] == "":
-        return  redirect("/choose_username")
+        return redirect("/choose_username")
 
     return redirect("/protected_area")
 
