@@ -13,7 +13,6 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from datetime import timedelta
 from flask import session, app
-
 from flask_mysqldb import MySQL
 
 secret_key = secrets.token_hex(16)
