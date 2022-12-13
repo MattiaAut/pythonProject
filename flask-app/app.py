@@ -9,7 +9,7 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from datetime import timedelta
 from flask import session, app
-
+#lalalaal
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode")
 app.config['SECRET_KEY'] = secret_key
