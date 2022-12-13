@@ -83,12 +83,13 @@ def callback():
 
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT Username FROM USER WHERE UserEmail ="%s"''' %session['email'])
-    table = cursor.fetchall()
+    result = cursor.fetchone()
     cursor.close()
-    if table is not null
-        session["username"] = table[0][0]
-    if session["username"] == "()":
-        return  redirect("/choose_username")
+    if result is not None:
+        session["username"] = result
+    else:
+        no_error = "no_error"
+        return redirect("/choose_username", no_error) #aggiustare
 
     return redirect("/protected_area")
 
@@ -117,26 +118,29 @@ def aboutus():
     return render_template('aboutus.html')
 
 @app.route("/choose_username")
-def choose_username():
-    return render_template('choose_username.html')
+def choose_username(error):
+    print (error)
+    if error == "no_error":
+        return render_template("choose_username.html")
+    else:
+        return render_template("choose_username.html",error=error) #aggiustare
 
 @app.route("/check_username", methods=['GET', 'POST'])
 def check_username():
     error=None
     if request.method == 'POST':
         form_data=request.form.get("username")
-    else:
-        form_data=None
 
+    username_choosed = form_data
     cursor = mysql.connection.cursor()
-    cursor.execute ('''SELECT COUNT (*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %form_data)
-    table = cursor.fetchall()
+    cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %username_choosed)
+    result = cursor.fetchone()
     cursor.close()
-    if(table[0][0] > 0 ):      #se l username gia esiste va fatta la query
+    if result is not None:      #se l username gia esiste va fatta la query
         error = "Username already used"
-        return render_template("choose_username.html",error=error)
+        return redirect("/choose_username", error)    #aggiustare
     else:
-        session["username"] = form_data
+        session["username"] = username_choosed
         cursor = mysql.connection.cursor()
         cursor.execute('''INSERT INTO USER VALUES (session["email"],session["username"],"1")''')
         mysql.connection.commit()
