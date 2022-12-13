@@ -118,7 +118,7 @@ def aboutus():
     return render_template('aboutus.html')
 
 @app.route("/choose_username")
-def choose_username(error):
+def choose_username(error): #aggiustare
     print (error)
     if error == "no_error":
         return render_template("choose_username.html")
