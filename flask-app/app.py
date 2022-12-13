@@ -5,21 +5,22 @@ import secrets
 import sqlite3
 import subprocess
 import sys
+import flask
 import flask_mysqldb
-from flask import Flask, session, abort, redirect, request, render_template, flash
+import datetime
+import google.auth.transport.requests
+from flask import Flask, session, abort, redirect, request, render_template, flash, app
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
-import google.auth.transport.requests
 from datetime import timedelta
-from flask import session, app
 from flask_mysqldb import MySQL
 
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode", template_folder="templates")
 app.config['SECRET_KEY'] = secret_key
 
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'FrontlineCode'
@@ -37,7 +38,7 @@ flow= Flow.from_client_secrets_file(
     redirect_uri="http://127.0.0.1:5000/callback"
 )
 
-conn = sqlite3.connect("frontlinecode.db") #CONNESSO
+conn = sqlite3.connect("frontlinecode.db")  #CONNESSO
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
@@ -79,13 +80,14 @@ def callback():
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
+
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT Username FROM USER WHERE UserEmail = session["email"]''')
+    cursor.execute('''SELECT Username FROM USER WHERE UserEmail ="%s"''' %session['email'])
     table = cursor.fetchall()
     cursor.close()
-    session["username"] = table.row[0]
-
-    if session["username"] == NULL:
+    if table is not null
+        session["username"] = table[0][0]
+    if session["username"] == "()":
         return  redirect("/choose_username")
 
     return redirect("/protected_area")
@@ -127,10 +129,10 @@ def check_username():
         form_data=None
 
     cursor = mysql.connection.cursor()
-    cursor.execute ('''SELECT COUNT (*) AS QUANTITY FROM USER WHERE USERNAME = form_data''')
+    cursor.execute ('''SELECT COUNT (*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %form_data)
     table = cursor.fetchall()
     cursor.close()
-    if(table.row[0] > 0 ):      #se l username gia esiste va fatta la query
+    if(table[0][0] > 0 ):      #se l username gia esiste va fatta la query
         error = "Username already used"
         return render_template("choose_username.html",error=error)
     else:
@@ -168,4 +170,4 @@ def profile():
             return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
 
 if __name__ == "__main__":
-    app.run(debug=True, host='localhost', port=5000)
+    app.run(debug=True, host='127.0.0.1', port=5000)
