@@ -30,6 +30,7 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 #app.secret.key="CodeSpecialist.com"
 GOOGLE_CLIENT_ID="412052900468-fmptddpq7os5ld3u9bbjpuvm6j35mf6q.apps.googleusercontent.com"
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent,"client-secret.json")
+error ="no_error"
 
 flow= Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
@@ -44,7 +45,7 @@ def login_is_required(function):
         if "google_id" not in session:
             abort(401)  #Authorization required
         else:
-            if session["username"] == "":
+            if session["username"] is None:
                 abort(401)
             else:
                 return function()
@@ -86,12 +87,49 @@ def callback():
     result = cursor.fetchone()
     cursor.close()
     if result is not None:
-        session["username"] = result
+        session["username"] = result[0]
     else:
         no_error = "no_error"
         return redirect("/choose_username", no_error) #aggiustare
 
     return redirect("/protected_area")
+
+@app.route("/choose_username")
+def choose_username(): #aggiustare
+    global error
+    if error == "no_error":
+        return render_template("choose_username.html")
+    else:
+        return render_template("choose_username.html", error=error) #aggiustare
+
+@app.route("/check_username", methods=['GET', 'POST'])
+def check_username():
+    global error
+    if request.method == 'POST':
+        form_data = request.form.get("username")
+
+    username_choosed = form_data
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %username_choosed)
+    result = cursor.fetchone()
+    cursor.close()
+    if result[0] > 0:      #se l username gia esiste va fatta la query
+        error = "Username already used"
+        return redirect("/choose_username", error)    #aggiustare
+    else:
+        error="no_error"
+        session["username"] = username_choosed
+        cursor = mysql.connection.cursor()
+        cursor.execute('''INSERT INTO USER VALUES ("%s", "%s", 1)''' %(session["email"], session["username"]) )
+        mysql.connection.commit()
+        cursor.close()
+        #insert user into db
+        return redirect("/protected_area")
+
+@app.route("/protected_area")
+@login_is_required
+def protected_area():
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"])
 
 @app.route("/logout")
 def logout():
@@ -117,48 +155,12 @@ def index():
 def aboutus():
     return render_template('aboutus.html')
 
-@app.route("/choose_username")
-def choose_username(error): #aggiustare
-    print (error)
-    if error == "no_error":
-        return render_template("choose_username.html")
-    else:
-        return render_template("choose_username.html",error=error) #aggiustare
-
-@app.route("/check_username", methods=['GET', 'POST'])
-def check_username():
-    error=None
-    if request.method == 'POST':
-        form_data=request.form.get("username")
-
-    username_choosed = form_data
-    cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %username_choosed)
-    result = cursor.fetchone()
-    cursor.close()
-    if result is not None:      #se l username gia esiste va fatta la query
-        error = "Username already used"
-        return redirect("/choose_username", error)    #aggiustare
-    else:
-        session["username"] = username_choosed
-        cursor = mysql.connection.cursor()
-        cursor.execute('''INSERT INTO USER VALUES (session["email"],session["username"],"1")''')
-        mysql.connection.commit()
-        cursor.close()
-        #insert user into db
-        return redirect("/protected_area")
-
-@app.route("/protected_area")
-@login_is_required
-def protected_area():
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"])
-
 @app.route("/gameNUMQUESTION")
 def gameNUMQUESTION():
     if "google_id" not in session:
         abort(401)  # Authorization required
     else:
-        if session["username"] == "":
+        if session["username"] is None:
             abort(401)
         else:
             return render_template('gameNUMQUESTION.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
@@ -168,7 +170,7 @@ def profile():
     if "google_id" not in session:
         abort(401)  # Authorization required
     else:
-        if session["username"] == "":
+        if session["username"] is None:
             abort(401)
         else:
             return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
