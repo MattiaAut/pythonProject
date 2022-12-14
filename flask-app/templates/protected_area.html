@@ -23,11 +23,18 @@
             "where id_question=i"
             document.addEventListener('DOMContentLoaded', function() {
             var div = document.createElement('div');
+            document.getElementById('loop').innerHTML = i;
             div.className = 'col-sm-2';
             div.innerHTML = '<div class="card" id="div-inside" style="width: 12rem;">\n' +
                 '   <img class="card-img-top" src={{picture}} alt="1 Level">\n' +
                 '   <div class="card-body">\n' +
-                '       <h5 class="card-title">Level +'</h5>\n' +
+                '   <py-script>\n'+
+                '       cursor = mysql.connection.cursor()\n'+
+                '       cursor.execute(\'\'\'SELECT Difficulty FROM QUESTION WHERE QuestionId="%s"\'\'\' %i)\n\n'+
+                '       result = cursor.fetchone()\n\n'+
+                '       cursor.close()\n\n'+'   ' +
+                '</py-script>\n'+
+                '       <h5 class="card-title">Level</h5>\n' +
                 '       <p class="card-text">{{difficulty}}</p>\n' +
                 '        <a href=\'/gameNUMQUESTION\'><button type=\'button\' style=\'height:38px; font-family: "DisposableDroidBB", sans-serif;\' class=\'btn btn-outline-dark\'>LEVEL1</button></a>\n' +
                 '    </div>\n' +
@@ -62,18 +69,6 @@
         <h1 align="center"> Welcome On Frontline Code</h1>
         <h3 align="center">Hello {{name}}, {{username}} , ci sono {{questions}} domande</h3>
         <br>
-        <!--
-        <div class="card" style="width: 8rem;">
-          <img class="card-img-top" src={{picture}} alt="1 Level">
-          <div class="card-body">
-            <h5 class="card-title">1° Level</h5>
-            <p class="card-text">{{difficulty}}</p>
-            <a href='/gameNUMQUESTION'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>LEVEL1</button></a>
-          </div>
-        </div>
-        -->
-                <!--</div>
-            </div> -->
          <!--div contenente tutti i livelli-->
         <div class="row" id="levels">
         </div>
@@ -108,4 +103,3 @@
     </footer>
 </body>
 </html>
-
