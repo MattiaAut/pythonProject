@@ -137,7 +137,11 @@ def check_username():
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"])
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM QUESTION''')
+    result = cursor.fetchone()
+    questions = result[0]
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=questions)
 
 @app.route("/gameNUMQUESTION")
 def gameNUMQUESTION():

@@ -41,16 +41,18 @@ label{
     font-family: "DisposableDroidBB", sans-serif;
 }
 nav{
-top:0;
-left:0;
-right:0;
+top:0px;
+left:0px;
+right:0px;
 height:60px;
 }
 
 footer {
-position: absolute;
-bottom:0;
-left: 0;
+margin-top:auto;
+bottom:0px;
+left: 0px;
+right:0px;
+margin-bottom: 0px;
 width: 100%;
 overflow: hidden;
 color:#fff;
