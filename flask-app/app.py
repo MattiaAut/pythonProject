@@ -90,7 +90,7 @@ def callback():
         session["username"] = result[0]
     else:
         no_error = "no_error"
-        return redirect("/choose_username", no_error) #aggiustare
+        return redirect("/choose_username", no_error)
 
     return redirect("/protected_area")
 
@@ -100,7 +100,7 @@ def choose_username(): #aggiustare
     if error == "no_error":
         return render_template("choose_username.html")
     else:
-        return render_template("choose_username.html", error=error) #aggiustare
+        return render_template("choose_username.html", error=error)
 
 @app.route("/check_username", methods=['GET', 'POST'])
 def check_username():
@@ -113,9 +113,9 @@ def check_username():
     cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %username_choosed)
     result = cursor.fetchone()
     cursor.close()
-    if result[0] > 0:      #se l username gia esiste va fatta la query
+    if result[0] > 0:
         error = "Username already used"
-        return redirect("/choose_username", error)    #aggiustare
+        return redirect("/choose_username", error)
     else:
         error="no_error"
         session["username"] = username_choosed
@@ -123,7 +123,6 @@ def check_username():
         cursor.execute('''INSERT INTO USER VALUES ("%s", "%s", 1)''' %(session["email"], session["username"]) )
         mysql.connection.commit()
         cursor.close()
-        #insert user into db
         return redirect("/protected_area")
 
 @app.route("/protected_area")
@@ -139,17 +138,6 @@ def logout():
 @app.route("/")
 def index():
     return render_template('index.html')
-
-    #cursor = mysql.connection.cursor()
-    #if cursor:
-        #cursor.execute(''' SELECT * FROM USER''')
-        #table = cursor.fetchall()
-        #print('\n Table Data:')
-        #for row in table:
-       #     print(row[0], end=" ")
-      #      print(row[1], end=" ")
-     #       print(row[2], end="\n")
-    #    cursor.close()
 
 @app.route("/aboutus")
 def aboutus():
