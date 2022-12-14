@@ -18,8 +18,8 @@ from flask_mysqldb import MySQL
 
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode", template_folder="templates")
-app.config['SECRET_KEY'] = secret_key
 
+app.config['SECRET_KEY'] = secret_key
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -39,7 +39,8 @@ flow= Flow.from_client_secrets_file(
     redirect_uri="http://127.0.0.1:5000/callback"
 )
 
-conn = sqlite3.connect("frontlinecode.db")  #CONNESSO
+conn = sqlite3.connect("frontlinecode.db")  # CONNECTED
+
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
@@ -51,11 +52,20 @@ def login_is_required(function):
                 return function()
     return wrapper
 
+@app.route("/")
+def index():
+    return render_template('index.html')
+
 @app.route("/login")
 def login():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
     return redirect(authorization_url)
+
+@app.route("/aboutus")
+def aboutus():
+    return render_template('aboutus.html')
+
 
 @app.route("/callback")
 def callback():
@@ -81,7 +91,6 @@ def callback():
     session["email"] = id_info.get("email")
     session["name"] = id_info.get("name")
     session["photo"] = id_info.get("picture")
-
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT Username FROM USER WHERE UserEmail ="%s"''' %session['email'])
     result = cursor.fetchone()
@@ -89,13 +98,12 @@ def callback():
     if result is not None:
         session["username"] = result[0]
     else:
-        no_error = "no_error"
-        return redirect("/choose_username", no_error)
+        return redirect("/choose_username")
 
     return redirect("/protected_area")
 
 @app.route("/choose_username")
-def choose_username(): #aggiustare
+def choose_username():
     global error
     if error == "no_error":
         return render_template("choose_username.html")
@@ -115,7 +123,7 @@ def check_username():
     cursor.close()
     if result[0] > 0:
         error = "Username already used"
-        return redirect("/choose_username", error)
+        return redirect("/choose_username")
     else:
         error="no_error"
         session["username"] = username_choosed
@@ -129,19 +137,6 @@ def check_username():
 @login_is_required
 def protected_area():
     return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"])
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect("/")
-
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-@app.route("/aboutus")
-def aboutus():
-    return render_template('aboutus.html')
 
 @app.route("/gameNUMQUESTION")
 def gameNUMQUESTION():
@@ -162,6 +157,11 @@ def profile():
             abort(401)
         else:
             return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True, host='127.0.0.1', port=5000)
