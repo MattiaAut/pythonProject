@@ -134,14 +134,31 @@ def check_username():
         cursor.close()
         return redirect("/protected_area")
 
+"""
+def get_level(id, difficulty, text):
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT QuestionId, Difficulty, QuestionText FROM QUESTION''')
+    table = cursor.fetchall()
+    cursor.close()
+    return table
+
+@app.route('/<int:id>/', '/<String:difficulty>/','/<String:text>/')
+def protected_area(id):
+    table = get_post(id,difficulty,text)
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=table)
+"""
 @app.route("/protected_area")
 @login_is_required
 def protected_area():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM QUESTION''')
     result = cursor.fetchone()
-    questions = result[0]
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=questions)
+    cursor.close()
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT QuestionId, Difficulty, QuestionText FROM QUESTION''')
+    table = cursor.fetchall()
+    cursor.close()
+    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=table)
 
 @app.route("/gameNUMQUESTION")
 def gameNUMQUESTION():
