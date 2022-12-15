@@ -15,6 +15,7 @@ from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 from datetime import timedelta
 from flask_mysqldb import MySQL
+from jinja2 import Template
 
 secret_key = secrets.token_hex(16)
 app = Flask("FrontlineCode", template_folder="templates")
