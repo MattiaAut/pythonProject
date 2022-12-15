@@ -45,10 +45,19 @@
               {% for row in value:%}
                 <div class="col-sm-3">
                     <div class="card" id="div-inside" style="width: 12rem;">
-                       <h5>{{value[loop.index-1][2]}}</h5>
+                        {% if value[loop.index-1][1] == 'easy'%}
+                            <p style="text-align: center; background-color: lightseagreen ;font-family: 'DisposableDroidBB', sans-serif;text"><b><font size="5">GAME</font></b></p>
+                        {% endif %}
+                        {% if value[loop.index-1][1] == 'amateur'%}
+                            <p style="text-align: center; background-color: green ;font-family: 'DisposableDroidBB', sans-serif;text"><b><font size="5">GAME</font></b></p>
+                        {% endif %}
+                        {% if value[loop.index-1][1] == 'hard'%}
+                            <p style="text-align: center; background-color: darkred ;font-family: 'DisposableDroidBB', sans-serif;text"><b><font size="5">GAME</font></b></p>
+                        {% endif %}
+                        <h5 style="text-transform: uppercase;text-align: center;">{{value[loop.index-1][2]}}</h5>
                        <div class="card-body">
-                           <p class="card-text">{{value[loop.index-1][1]}}</p>
-                            <a href="/gameNUMQUESTION"><button type="button" style="height:38px; font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark">Level{{value[loop.index-1][0]}}</button></a>
+                           <p style="text-transform: uppercase; text-align: center; font-family: 'DisposableDroidBB', sans-serif;" class="card-text">{{value[loop.index-1][1]}}</p>
+                            <a href="/gameNUMQUESTION"><button type="button" style="height:38px; margin-left: 40px; font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark">LEVEL {{value[loop.index-1][0]}}</button></a>
                         </div>
                     </div>
                 </div>
