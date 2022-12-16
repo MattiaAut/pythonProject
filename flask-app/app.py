@@ -144,7 +144,7 @@ def protected_area():
     result = cursor.fetchone()
     cursor.close()
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT QuestionId, Difficulty , QuestionText FROM QUESTION''')
+    cursor.execute('''SELECT QuestionId, Difficulty, QuestionText FROM QUESTION''')
     list_of_tuples = cursor.fetchall()
     cursor.close()
     return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=list_of_tuples)
