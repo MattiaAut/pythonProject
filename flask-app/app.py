@@ -188,6 +188,21 @@ def profile():
             abort(401)
         else:
             return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
+@app.route("/query")
+def query():
+
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    elif session["username"] is None:
+        abort(401)
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
+        role = cursor.fetchone()
+        cursor.close()
+        if role[0] == 1:
+            return render_template('query.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+
 
 @app.route("/logout")
 def logout():
