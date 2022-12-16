@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS USER
 (   
     UserEmail   varchar(50)     NOT NULL,
     Username    varchar(20)     NOT NULL, 
+    Userrole    int             NOT NULL,
     CONSTRAINT User_pk PRIMARY KEY (UserEmail)
 );
 """
@@ -97,15 +98,15 @@ CREATE TABLE IF NOT EXISTS PLAYS
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_user1="""
-INSERT INTO USER VALUES("admin@gmail.com","admin");
+INSERT INTO USER VALUES("admin@gmail.com","admin","1");
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_user2="""
-INSERT INTO USER VALUES("mattiaautiero@gmail.com","mattia");
+INSERT INTO USER VALUES("mattiaautiero119@gmail.com","mattia","1");
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_user3="""
-INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio");
+INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio","1");
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_question1="""
@@ -138,6 +139,9 @@ INSERT INTO CHOOSE VALUES("if(a<b) min=a; else min=b; return min;","2","1");
 insert_choose3="""
 INSERT INTO CHOOSE VALUES("if(a>b) max=a; else max=b; return max;","1","1");
 """
+insert_choose4="""
+INSERT INTO CHOOSE VALUES("if(a<b) max=a; else max=b; return max;","1","0");
+"""
 
 connection_server= create_server_connection ("localhost", "root","")
 create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
@@ -159,4 +163,5 @@ execute_query(connection_database, insert_plays3)
 execute_query(connection_database, insert_choose1)
 execute_query(connection_database, insert_choose2)
 execute_query(connection_database, insert_choose3)
+execute_query(connection_database, insert_choose4)
 

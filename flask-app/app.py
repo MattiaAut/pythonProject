@@ -130,7 +130,7 @@ def check_username():
         error="no_error"
         session["username"] = username_choosed
         cursor = mysql.connection.cursor()
-        cursor.execute('''INSERT INTO USER VALUES ("%s", "%s")''' %(session["email"], session["username"]) )
+        cursor.execute('''INSERT INTO USER VALUES ("%s", "%s","2")''' %(session["email"], session["username"]) )
         mysql.connection.commit()
         cursor.close()
         return redirect("/protected_area")
@@ -147,7 +147,11 @@ def protected_area():
     cursor.execute('''SELECT QuestionId, Difficulty, QuestionText FROM QUESTION''')
     list_of_tuples = cursor.fetchall()
     cursor.close()
-    return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=list_of_tuples)
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' %(session["email"]))
+    role = cursor.fetchone()
+    cursor.close()
+    return render_template('protected_area.html', name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=list_of_tuples, role=role[0])
 
 @app.route("/game", methods=['GET', 'POST'])
 def game():
@@ -173,7 +177,7 @@ def game():
             choose = cursor.fetchall()
             cursor.close()
 
-            return render_template('game.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],choose=choose)
+            return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2], choose=choose)
 
 @app.route("/profile")
 def profile():

@@ -26,6 +26,9 @@
                     <img src={{picture}} width="36" height="36px" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton" style="margin-right:1px; position:relative">
+                    {% if role == 1%}
+                        <a class="dropdown-item" href="/Query">Query </a>
+                    {% endif %}
                     <a class="dropdown-item" href="/profile">Profile ({{username}})</a>
                     <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
@@ -37,7 +40,7 @@
     <!--Main-container-->
     <div id="main-container">
         <h1 align="center"> Welcome On Frontline Code</h1>
-        <h3 align="center">Hello {{name}}, {{username}} , ci sono {{questions}} domande</h3>
+        <h3 align="center" style="text-transform: uppercase; font-size: 25px">Hello {{username}} , there are {{questions}} questions<br>Play now</br></h3>
         <br>
          <!--div contenente tutti i livelli-->
         <div class="row" id="main-container">
