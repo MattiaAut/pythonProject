@@ -163,7 +163,7 @@ def game():
             level_choosed=form_data
             # search date from level choosed
             cursor = mysql.connection.cursor()
-            cursor.execute('''SELECT Difficulty, QuestionText, QuestionCode, CorrectOutput FROM QUESTION WHERE QuestionId = "%s"''' %level_choosed)
+            cursor.execute('''SELECT Difficulty, QuestionText, QuestionCode FROM QUESTION WHERE QuestionId = "%s"''' %level_choosed)
             list_of_tuples = cursor.fetchall()
             cursor.close()
             # search choose about quesion
@@ -173,12 +173,7 @@ def game():
             choose = cursor.fetchall()
             cursor.close()
 
-
-            #for row in choose:
-
-
-            return render_template('game.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0],
-            question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2], correct_output=list_of_tuples[0][3])
+            return render_template('game.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],choose=choose)
 
 @app.route("/profile")
 def profile():
