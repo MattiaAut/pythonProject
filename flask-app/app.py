@@ -130,7 +130,7 @@ def check_username():
         error="no_error"
         session["username"] = username_choosed
         cursor = mysql.connection.cursor()
-        cursor.execute('''INSERT INTO USER VALUES ("%s", "%s", 1)''' %(session["email"], session["username"]) )
+        cursor.execute('''INSERT INTO USER VALUES ("%s", "%s")''' %(session["email"], session["username"]) )
         mysql.connection.commit()
         cursor.close()
         return redirect("/protected_area")
@@ -169,7 +169,7 @@ def game():
             # search choose about quesion
             cursor = mysql.connection.cursor()
             cursor.execute(
-                '''SELECT ChooseText,  FROM CHOOSE WHERE QuestionId = "%s"''' % level_choosed)
+                '''SELECT ChooseText FROM CHOOSE WHERE QuestionId = "%s"''' % level_choosed)
             choose = cursor.fetchall()
             cursor.close()
 

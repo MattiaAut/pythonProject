@@ -43,7 +43,7 @@
         <div class="row" id="levels">
             {% block content %}
               {% for row in value:%}
-                <div class="col-sm-3">
+                <div class="col-sm-3" style="margin-bottom:10px ">
                     <div class="card" id="div-inside" style="width: 80%;">
                         {% if value[loop.index-1][1] == 'easy'%}
                             <p style="text-align: center; background-color: lightseagreen ;font-family: 'DisposableDroidBB', sans-serif;"><b><font size="5">GAME</font></b></p>
@@ -68,7 +68,6 @@
             {% endblock %}
         </div>
     </div>
-    <br>
     <!--Footer-->
     <footer class="bg-dark text-center text-white" id="footer">
         <div class="container p-4 pb-0">

@@ -26,9 +26,22 @@
       </nav>
 
   <div id="main-container">
-      <h1 align="center">LEVEL {{level_choosed}}</h1>
-      <h3>{{question_text}}</h3>
-      <div><h3>{{question_code}}</h3></div>
+      <h1 align="center" style="text-transform: uppercase;">LEVEL {{level}}: {{difficulty}}</h1>
+      <center><h3>Question: {{question_text}}</h3></center>
+      <div class="row">
+          <div class="mh-100" style="width:48%; height:300px; background-color:#eee; border-style: double;">
+                <div class="col-md-6">
+                    <label for="question_code"><h3>{{question_code}}</h3></label>
+                </div>
+          </div>
+          <div class="mh-100" style="width:4%;">
+          </div>
+          <div class="mh-100" style="width:48%; height:300px; background-color:#eee; border-style: double;">
+                <div class="col-md-6">
+                    <label for="user_in"><input type="text"></label>
+                </div>
+          </div>
+      </div>
   </div>
 
   <footer class="bg-dark text-center text-white">
