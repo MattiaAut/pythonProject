@@ -50,11 +50,11 @@ create_table_user="""
 CREATE TABLE IF NOT EXISTS USER
 (   
     UserEmail   varchar(50)     NOT NULL,
-    Username    varchar(20)     NOT NULL,
-    UserRole    int     NOT NULL,   
+    Username    varchar(20)     NOT NULL, 
     CONSTRAINT User_pk PRIMARY KEY (UserEmail)
 );
 """
+# -------------------------------------------------------------------------------------------------------------------------------
 create_table_question="""
 CREATE TABLE IF NOT EXISTS QUESTION
 (   
@@ -69,29 +69,45 @@ CREATE TABLE IF NOT EXISTS QUESTION
     CONSTRAINT Question_fk  FOREIGN KEY (UserEmail) REFERENCES USER(UserEmail)
 );
 """
-create_table_game="""
-CREATE TABLE IF NOT EXISTS GAME
+# -------------------------------------------------------------------------------------------------------------------------------
+create_table_choose="""
+CREATE TABLE IF NOT EXISTS CHOOSE
+(
+    ChooseText   varchar(200)     NOT NULL,
+    QuestionId  int     NOT NULL,
+    Correct     int     NOT NULL,
+    CONSTRAINT Choose_pk PRIMARY KEY (ChooseText,QuestionId),
+    CONSTRAINT Choose_fk FOREIGN KEY (QuestionId) REFERENCES QUESTION(QuestionId),
+);
+"""
+# -------------------------------------------------------------------------------------------------------------------------------
+create_table_plays="""
+CREATE TABLE IF NOT EXISTS PLAYS
 (
     UserEmail   varchar(50)     NOT NULL,
     QuestionId  int     NOT NULL,
     GameScore     int     NOT NULL,
     DatePlayed  date    NOT NULL,
     UserInput   varchar(1000)   NOT NULL,
-    CONSTRAINT Game_pk PRIMARY KEY (DatePlayed,QuestionId,UserEmail),
-    CONSTRAINT Game_fk1 FOREIGN KEY (QuestionId) REFERENCES QUESTION(QuestionId),
-    CONSTRAINT Game_fk2 FOREIGN KEY (UserEmail) REFERENCES USER(UserEmail)
+    TimeSpent   int     NOT NULL,
+    CONSTRAINT Plays_pk PRIMARY KEY (DatePlayed,QuestionId,UserEmail),
+    CONSTRAINT Plays_fk1 FOREIGN KEY (QuestionId) REFERENCES QUESTION(QuestionId),
+    CONSTRAINT Plays_fk2 FOREIGN KEY (UserEmail) REFERENCES USER(UserEmail)
 );
 """
+# -------------------------------------------------------------------------------------------------------------------------------
 insert_user1="""
-INSERT INTO USER VALUES("admin@gmail.com","admin","2");
+INSERT INTO USER VALUES("admin@gmail.com","admin");
 """
+# -------------------------------------------------------------------------------------------------------------------------------
 insert_user2="""
-INSERT INTO USER VALUES("mattiaautiero@gmail.com","mattia","2");
+INSERT INTO USER VALUES("mattiaautiero@gmail.com","mattia");
 """
+# -------------------------------------------------------------------------------------------------------------------------------
 insert_user3="""
-INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio","2");
+INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio");
 """
-
+# -------------------------------------------------------------------------------------------------------------------------------
 insert_question1="""
 INSERT INTO QUESTION VALUES("1","Return the maximum","int a=10, b=11, max=0;","11","2022-12-07 10:04:03","easy","admin@gmail.com");
 """
@@ -103,29 +119,44 @@ INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3
 """
 #SELECT ADDTIME(CURTIME(), '0:5') serve ad aggiungere tempo all ora corrente da ricordare
 
-insert_game1="""
-INSERT INTO GAME VALUES("mattiaautiero@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;");
+insert_plays1="""
+INSERT INTO PLAYS VALUES("mattiaautiero@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;");
 """
-insert_game2="""
-INSERT INTO GAME VALUES("flavioruggiero@gmail.com","2","100","2022-12-07 12:04:03","if(a<b) min=a; else min=b; return min;");
+insert_plays2="""
+INSERT INTO PLAYS VALUES("flavioruggiero@gmail.com","2","100","2022-12-07 12:04:03","if(a<b) min=a; else min=b; return min;");
 """
-insert_game3="""
-INSERT INTO GAME VALUES("admin@gmail.com","3","0","2022-12-07 14:04:03","if(a[0]>a[1]) a[0]=a[1]");
+insert_plays3="""
+INSERT INTO PLAYS VALUES("admin@gmail.com","3","0","2022-12-07 14:04:03","if(a[0]>a[1]) a[0]=a[1]");
 """
+# -------------------------------------------------------------------------------------------------------------------------------
+insert_choose1="""
+INSERT INTO CHOOSE VALUES("if(a[0]>a[1]) a[0]=a[1]","3","0");
+"""
+insert_choose2="""
+INSERT INTO CHOOSE VALUES("if(a<b) min=a; else min=b; return min;","2","1");
+"""
+insert_choose3="""
+INSERT INTO CHOOSE VALUES("if(a>b) max=a; else max=b; return max;","1","1");
+"""
+
 connection_server= create_server_connection ("localhost", "root","")
 create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
 create_database(connection_server,create_db_query)
-connection_database = create_db_connection("localhost", "root", "","frontlinecode")
+connection_database = create_db_connection("localhost", "root", "", "frontlinecode")
 execute_query(connection_database, create_table_user)
 execute_query(connection_database, create_table_question)
-execute_query(connection_database, create_table_game)
+execute_query(connection_database, create_table_choose)
+execute_query(connection_database, create_table_plays)
 execute_query(connection_database, insert_user1)
 execute_query(connection_database, insert_user2)
 execute_query(connection_database, insert_user3)
 execute_query(connection_database, insert_question1)
 execute_query(connection_database, insert_question2)
 execute_query(connection_database, insert_question3)
-execute_query(connection_database, insert_game1)
-execute_query(connection_database, insert_game2)
-execute_query(connection_database, insert_game3)
+execute_query(connection_database, insert_plays1)
+execute_query(connection_database, insert_plays2)
+execute_query(connection_database, insert_plays3)
+execute_query(connection_database, insert_choose1)
+execute_query(connection_database, insert_choose2)
+execute_query(connection_database, insert_choose3)
 
