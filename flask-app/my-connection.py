@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS QUESTION
 (   
     QuestionId      int     NOT NULL AUTO_INCREMENT,
     QuestionText    varchar(250)     NOT NULL,
-    QuestionCode    varchar(50000)    NOT NULL,
+    QuestionCode    varchar(500)    NOT NULL,
     CorrectOutput   varchar(50)     NOT NULL,
     QuestionDate    date    NOT NULL,
     Difficulty      varchar(15) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS CHOOSE
     QuestionId  int     NOT NULL,
     Correct     int     NOT NULL,
     CONSTRAINT Choose_pk PRIMARY KEY (ChooseText,QuestionId),
-    CONSTRAINT Choose_fk FOREIGN KEY (QuestionId) REFERENCES QUESTION(QuestionId),
+    CONSTRAINT Choose_fk FOREIGN KEY (QuestionId) REFERENCES QUESTION(QuestionId)
 );
 """
 # -------------------------------------------------------------------------------------------------------------------------------
@@ -120,13 +120,13 @@ INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3
 #SELECT ADDTIME(CURTIME(), '0:5') serve ad aggiungere tempo all ora corrente da ricordare
 
 insert_plays1="""
-INSERT INTO PLAYS VALUES("mattiaautiero@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;");
+INSERT INTO PLAYS VALUES("mattiaautiero@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;","30");
 """
 insert_plays2="""
-INSERT INTO PLAYS VALUES("flavioruggiero@gmail.com","2","100","2022-12-07 12:04:03","if(a<b) min=a; else min=b; return min;");
+INSERT INTO PLAYS VALUES("flavioruggiero@gmail.com","2","100","2022-12-07 12:04:03","if(a<b) min=a; else min=b; return min;","34");
 """
 insert_plays3="""
-INSERT INTO PLAYS VALUES("admin@gmail.com","3","0","2022-12-07 14:04:03","if(a[0]>a[1]) a[0]=a[1]");
+INSERT INTO PLAYS VALUES("admin@gmail.com","3","0","2022-12-07 14:04:03","if(a[0]>a[1]) a[0]=a[1]","89");
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_choose1="""

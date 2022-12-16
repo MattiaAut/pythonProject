@@ -149,15 +149,36 @@ def protected_area():
     cursor.close()
     return render_template('protected_area.html',name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=list_of_tuples)
 
-@app.route("/gameNUMQUESTION")
-def gameNUMQUESTION():
+@app.route("/game", methods=['GET', 'POST'])
+def game():
     if "google_id" not in session:
         abort(401)  # Authorization required
     else:
         if session["username"] is None:
             abort(401)
         else:
-            return render_template('gameNUMQUESTION.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
+            if request.method == 'GET':
+                form_data = request.values.get("level")
+
+            level_choosed=form_data
+            # search date from level choosed
+            cursor = mysql.connection.cursor()
+            cursor.execute('''SELECT Difficulty, QuestionText, QuestionCode, CorrectOutput FROM QUESTION WHERE QuestionId = "%s"''' %level_choosed)
+            list_of_tuples = cursor.fetchall()
+            cursor.close()
+            # search choose about quesion
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                '''SELECT ChooseText,  FROM CHOOSE WHERE QuestionId = "%s"''' % level_choosed)
+            choose = cursor.fetchall()
+            cursor.close()
+
+
+            #for row in choose:
+
+
+            return render_template('game.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0],
+            question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2], correct_output=list_of_tuples[0][3])
 
 @app.route("/profile")
 def profile():
