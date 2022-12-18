@@ -144,7 +144,7 @@ def protected_area():
     result = cursor.fetchone()
     cursor.close()
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT QuestionId, Difficulty, QuestionText FROM QUESTION''')
+    cursor.execute('''SELECT QuestionId, Difficulty, QuestionText, QuestionTime FROM QUESTION''')
     list_of_tuples = cursor.fetchall()
     cursor.close()
     cursor = mysql.connection.cursor()
@@ -167,7 +167,7 @@ def game():
             level_choosed=form_data
             # search date from level choosed
             cursor = mysql.connection.cursor()
-            cursor.execute('''SELECT Difficulty, QuestionText, QuestionCode FROM QUESTION WHERE QuestionId = "%s"''' %level_choosed)
+            cursor.execute('''SELECT Difficulty, QuestionText, QuestionCode, QuestionTime FROM QUESTION WHERE QuestionId = "%s"''' %level_choosed)
             list_of_tuples = cursor.fetchall()
             cursor.close()
             # search choose about quesion
@@ -177,7 +177,7 @@ def game():
             choose = cursor.fetchall()
             cursor.close()
 
-            return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2], choose=choose)
+            return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],question_time=list_of_tuples[0][3], choose=choose)
 
 @app.route("/profile")
 def profile():

@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS QUESTION
     QuestionDate    date    NOT NULL,
     Difficulty      varchar(15) NOT NULL,
     UserEmail       varchar(50) NOT NULL,
+    QuestionTime    int       NOT NULL,
     CONSTRAINT Question_pk PRIMARY KEY (QuestionId,UserEmail),
     CONSTRAINT Question_fk  FOREIGN KEY (UserEmail) REFERENCES USER(UserEmail)
 );
@@ -110,13 +111,13 @@ INSERT INTO USER VALUES("flavioruggiero@gmail.com","flavio","1");
 """
 # -------------------------------------------------------------------------------------------------------------------------------
 insert_question1="""
-INSERT INTO QUESTION VALUES("1","Return the maximum","int a=10, b=11, max=0;","11","2022-12-07 10:04:03","easy","admin@gmail.com");
+INSERT INTO QUESTION VALUES("1","Return the maximum","int a=10, b=11, max=0;","11","2022-12-07 10:04:03","easy","admin@gmail.com","100");
 """
 insert_question2="""
-INSERT INTO QUESTION VALUES("2","Return the minimum","int a=10, b=11, min=0;","10","2022-12-07 10:03:03","amateur","admin@gmail.com");
+INSERT INTO QUESTION VALUES("2","Return the minimum","int a=10, b=11, min=0;","10","2022-12-07 10:03:03","amateur","admin@gmail.com","80");
 """
 insert_question3="""
-INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3,9,10,19","2022-12-07 10:02:03","hard","admin@gmail.com");
+INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3,9,10,19","2022-12-07 10:02:03","hard","admin@gmail.com","60");
 """
 #SELECT ADDTIME(CURTIME(), '0:5') serve ad aggiungere tempo all ora corrente da ricordare
 

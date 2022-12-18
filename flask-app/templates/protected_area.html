@@ -56,6 +56,7 @@
                         <h5 style="text-transform: uppercase;text-align: center;">{{value[loop.index-1][2]}}</h5>
                        <div class="card-body">
                            <p style="text-transform: uppercase; text-align: center; font-family: 'DisposableDroidBB', sans-serif;" class="card-text">{{value[loop.index-1][1]}}</p>
+                           <p style="text-transform: uppercase; text-align: center; font-family: 'DisposableDroidBB', sans-serif;" class="card-text">Time aviable: {{value[loop.index-1][3]}} seconds</p>
                            <form name="level-form" id="level-form" class="needs-validation" METHOD="GET" ACTION="/game">
                                <input type="hidden" name="game">
                                <center><button type="submit" style="height:38px; font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="level"  id="level" value={{value[loop.index-1][0]}}>LEVEL {{value[loop.index-1][0]}}</button></center>
