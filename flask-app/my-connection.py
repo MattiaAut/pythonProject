@@ -121,7 +121,7 @@ INSERT INTO QUESTION VALUES("3","Sort the array","int a[10]={10,2,3,9,19};","2,3
 #SELECT ADDTIME(CURTIME(), '0:5') serve ad aggiungere tempo all ora corrente da ricordare
 
 insert_plays1="""
-INSERT INTO PLAYS VALUES("mattiaautiero@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;","30");
+INSERT INTO PLAYS VALUES("mattiaautiero119@gmail.com","1","100","2022-12-07 12:04:03","if(a>b) max=a; else max=b; return max;","30");
 """
 insert_plays2="""
 INSERT INTO PLAYS VALUES("flavioruggiero@gmail.com","2","100","2022-12-07 12:04:03","if(a<b) min=a; else min=b; return min;","34");

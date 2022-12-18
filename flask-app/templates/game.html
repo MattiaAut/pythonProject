@@ -3,24 +3,33 @@
 <head>
     <title>FrontlineCode</title>
     <meta charset="UTF-8">
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+    <!--Javascript-->
+    <script>
+      const button = document.createElement('button') // Create a button element
+      button.innerText = 'Can you click me?'  // Set the button text to 'Can you click me?'
+      button.id = 'mainButton'
+      button.addEventListener('click', () => {  // Attach the "click" event to your button
+        alert('Oh, you clicked me!')// When there is a "click" it shows an alert in the browser
+      })
+     document.getElementById("butstart")
+    </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="pagination justify-content-end" style="width:100%; height:100%">
                   <a class="navbar-brand" href="/flask-app/static"><img src="" width="250" height="35" style="position:absolute; left:0;" alt=""></span></a>
               <div style="align-items: self-end">
-                  <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>Exit</button></a>
+                  <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif; margin-right:5px;' class='btn btn-outline-light'>Exit</button></a>
               </div>
           </div>
       </nav>
@@ -29,34 +38,34 @@
       {% block content %}
       {%if difficulty == 'easy':%}
         <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}} </h3></center>
+        <center><h3>Question: {{question_text}} </h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
         <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}} </h3></center>
+        <center><h3>Question: {{question_text}} </h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
       {% endif %}
       {%if difficulty == 'hard':%}
         <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}} </h3></center>
+        <center><h3>Question: {{question_text}}</h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
       {% endif %}
 
       <div class="row" id="main-container">
 
 
           {% if difficulty == 'easy'%}
-          <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">QUESTION CODE</h2></div></center>
+          <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
             <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">TAKE A CHOOSE</h2></center></div>
           {% endif %}
 
           {% if difficulty == 'amateur'%}
-          <div class="mh-100" style="width:48%;"><center><h2 style="color: green">QUESTION CODE</h2></div></center>
+          <div class="mh-100" style="width:48%;"><center><h2 style="color: green">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
             <div class="mh-100" style="width:48%;"><center><h2 style="color: green">TAKE A CHOOSE</h2></center></div>
           {% endif %}
 
           {% if difficulty == 'hard':%}
-          <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">QUESTION CODE</h2></div></center>
+          <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
             <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">INSERT TEXT</h2></center></div>
           {% endif %}
@@ -64,7 +73,13 @@
           <div class="mh-100" style="width:48%; height:340px; background-color:#eee; border-style: double;">
                 <div class="col-md-6">
                     {% if difficulty == 'easy'%}
-                        <label for="question_code"><h3>{{question_code}}</h3></label>
+                        <label><h3>{{question_code}}</h3></label>
+                    {% endif %}
+                    {% if difficulty == 'amateur'%}
+                        <label><h3>{{question_code}}</h3></label>
+                    {% endif %}
+                    {% if difficulty == 'hard'%}
+                        <label><h3>{{question_code}}</h3></label>
                     {% endif %}
                 </div>
           </div>
