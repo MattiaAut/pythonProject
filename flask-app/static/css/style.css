@@ -44,7 +44,9 @@ h6{
 button{
     font-family: 'DisposableDroidBB', sans-serif;
 }
-
+input type{
+    font-family: 'DisposableDroidBB', sans-serif;
+}
 label{
     color: lightseagreen;
     font-family: "DisposableDroidBB", sans-serif;
@@ -100,8 +102,4 @@ a{
 }
 p{
     font-family: "DisposableDroidBB", sans-serif;
-}
-
-#labelmenu{
-    background-color: #343a40;
 }

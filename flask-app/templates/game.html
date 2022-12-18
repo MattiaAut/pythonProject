@@ -13,15 +13,32 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
-    <!--Javascript-->
-    <script>
-      const button = document.createElement('button') // Create a button element
-      button.innerText = 'Can you click me?'  // Set the button text to 'Can you click me?'
-      button.id = 'mainButton'
-      button.addEventListener('click', () => {  // Attach the "click" event to your button
-        alert('Oh, you clicked me!')// When there is a "click" it shows an alert in the browser
-      })
-     document.getElementById("butstart")
+    <script type="text/javascript">
+    var c=100;
+    var t;
+    var timer_is_on=0;
+
+    function timedCount()
+    {
+    document.getElementById('txt').value = c;
+    c=c-1;
+    t=setTimeout("timedCount()",1000);
+    }
+
+    function doTimer()
+    {
+    if (!timer_is_on)
+      {
+      timer_is_on=1;
+      timedCount();
+      }
+    }
+
+    function stopCount()
+    {
+    clearTimeout(t);
+    timer_is_on=0;
+    }
     </script>
 </head>
 <body>
@@ -37,21 +54,19 @@
   <div id="main-container">
       {% block content %}
       {%if difficulty == 'easy':%}
-        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}} </h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
+        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br>Time left:<input type="text" id="txt" style="width:50px; color:lightseagreen;" readonly/></h1>
+      <center><h3>Question: {{question_text}} </h3><form name="timer"><input type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' onclick='doTimer()' value="start"></input></form></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
-        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}} </h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
+        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<div><span id="txt">100</span></div></h1>
+        <center><h3>Question: {{question_text}} </h3><form name="timer"><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' onclick='doTimer()'>Start</button></form></center>
       {% endif %}
       {%if difficulty == 'hard':%}
-        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}</h1>
-        <center><h3>Question: {{question_text}}</h3><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' id="butstart">Start</button></center>
+        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<div><span id="txt">100</span></div></h1>
+        <center><h3>Question: {{question_text}}</h3><form name="timer"><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' onclick='doTimer()'>Start</button></form></center>
       {% endif %}
 
       <div class="row" id="main-container">
-
-
           {% if difficulty == 'easy'%}
           <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
@@ -70,7 +85,7 @@
             <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">INSERT TEXT</h2></center></div>
           {% endif %}
 
-          <div class="mh-100" style="width:48%; height:340px; background-color:#eee; border-style: double;">
+          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
                 <div class="col-md-6">
                     {% if difficulty == 'easy'%}
                         <label><h3>{{question_code}}</h3></label>
@@ -87,7 +102,7 @@
           <div class="mh-100" style="width:4%;"></div>
 
           {% if difficulty == 'easy'%}
-          <div class="mh-100" style="width:48%; height:340px; background-color:#eee; border-style: double;">
+          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
               <div class="col-md-6">
                     {% for row in choose: %}
                         <div class="mh-100" style="width:100%; height:100px; border-style: double; margin-top:10px; margin-bottom:10px; margin-left:10px; margin-right:10px;">
@@ -99,7 +114,7 @@
           {% endif %}
 
           {% if difficulty == 'amateur'%}
-          <div class="mh-100" style="width:48%; height:340px; background-color:#eee; border-style: double;">
+          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
               <div class="col-md-6">
                     {% for row in choose: %}
                         <div class="mh-100" style="width:100%; height:100px; border-style: double; margin-top:10px; margin-bottom:10px; margin-left:10px; margin-right:10px;">
