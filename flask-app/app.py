@@ -248,7 +248,7 @@ def addquestion():
         cursor.close()
         if userrole2[0] == 1:
             return render_template('addquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
-@app.route("/insertquestion")
+@app.route("/insertquestion", methods = ['GET','POST'])
 def insertquestion():
 
     if "google_id" not in session:
@@ -260,7 +260,16 @@ def insertquestion():
         cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
         userrole4 = cursor.fetchone()
         cursor.close()
-        if userrole4[0] == 1:
+        if userrole4[0] == 1 and request.method == 'GET':
+            questionid = request.values.get("questionid")
+            questiontext = request.values.get("questiontext")
+            questioncode = request.values.get("questioncode")
+            correctoutput = request.values.get("correctoutput")
+            questiontime = request.value.get("questiontime")
+            difficulty = request.values.get("difficulty")
+            cursor = mysql.connection.cursor()
+            cursor.execute('''#INSERT INTO QUESTION VALUES ("%s","%s","%s","%s","%s","%s","%s","%s")''' %(questionid, questiontext, questioncode, correctoutput, datetime.date.today(), difficulty, session['email'], questiontime))
+            cursor.close()
             return render_template('insertquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
 
 @app.route("/insertchoose")

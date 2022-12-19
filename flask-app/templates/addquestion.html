@@ -23,26 +23,70 @@
             </div>
         </nav>
         <!--THE REAL BODY-->
+
         <center><h1>FrontlineCode DB</h1></center>
-        <form style="margin-left: 10px" action="/insertchoose">
-          <label style="color: black">Question Text:</label><br>
-          <input type="text" id="choosetext" name="choosetext" value=""><br>
-          <label style="color: black">Id Question:</label><br>
-          <input type="text" id="questionid" name="questionid" value=""><br><br>
-          <label style="color: black">Correct Output:</label><br>
-            <input type="text" id="correctoutput" name="correctoutput" value=""><br><br>
-          <label style="color: black">Question Date:</label><br>
-            <input type="text" id="questiondate" name="questiondate" value=""><br><br>
-          <label style="color: black">Difficulty:</label><br>
-            <select id="Difficulty" name="questionid" value="">
-                <option value="easy">EASY</option>
-                <option value="amateur">AMATEUR</option>
-                <option value="hard">HARD</option>
-            </select>
-          <label style="color: black">Question Time:</label><br>
-          <input type="number" id="questiontime" name="questiontime" value=""><br><br>
-        </form>
-        <!--Footer-->
+            <form name="invio" style="margin-left: 10px">
+              <label style="color: black">Question Text:</label><br>
+              <input type="text" id="questiontext" name="questiontext" value=""><br>
+              <label style="color: black">Id Question:</label><br>
+              <input type="text" id="questionid" name="questionid" value=""><br><br>
+                <label style="color: black">Question Code:</label><br>
+              <input type="text" id="questioncode" name="questioncode" value=""><br><br>
+              <label style="color: black">Correct Output:</label><br>
+                <input type="text" id="correctoutput" name="correctoutput" value=""><br><br>
+              <label style="color: black">Difficulty:</label><br>
+                <select id="difficulty" name="difficulty" value="">
+                    <option value="easy">EASY</option>
+                    <option value="amateur">AMATEUR</option>
+                    <option value="hard">HARD</option>
+                </select><br><br>
+              <label style="color: black">Question Time:</label><br>
+              <input type="number" id="questiontime" name="questiontime" value=""><br><br>
+              <input type="submit" value="Invia" onclick="valida()">
+            </form>
+        <script type="text/javascript">
+            function valida() {
+            // Variabili associate ai campi del modulo
+                   var questiontext = document.invio.questiontext.value;
+                   var questiontime = document.invio.questiontime.value;
+                   var questioncode = document.invio.questioncode.value;
+                   var questionid = document.invio.questionid.value;
+                   var difficulty = document.invio.difficulty.value;
+                   var correctoutput = document.invio.correctoutput.value;
+                   if (questiontext == "") {
+                      alert("You have to insert the text of the question");
+                      document.invio.questiontext.focus();
+                        return false;}
+                   if (questioncode == "") {
+                      alert("You have to insert the text of the question code");
+                      document.invio.questiontext.focus();
+                        return false;}
+                  if (questiontime == "") {
+                      alert("You have to insert the time necessary to resolve the question");
+                      document.invio.questiontext.focus();
+                        return false;}
+                  if (questionid == "") {
+                      alert("You have to insert the question id");
+                      document.invio.questiontext.focus();
+                      return false;}
+                  if (difficulty == "") {
+                      alert("You have to insert the difficulty");
+                      document.invio.questiontext.focus();
+                        return false;
+                  }
+                  if(correctoutput == ""){
+                      alert("You have to insert the correct output");
+                      document.invio.questiontext.focus();
+                      return false;
+                  }
+
+                  else {
+                      document.invio.action = "/insertquestion";
+                      document.invio.submit();
+                   }
+                }
+        </script>
+            <!--Footer-->
         <footer class="bg-dark text-center text-white" id="footer">
             <div class="container p-4 pb-0">
                 <!-- Section: Social media -->
