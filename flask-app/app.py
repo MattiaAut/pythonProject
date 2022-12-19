@@ -186,14 +186,48 @@ def gamesaved():
             abort(401)
         else:
             if request.method == 'POST':
-                form_data = request.values.get("")
-                match=form_data
-                # calcola il punteggio score=
+                level = request.values.get("question_id")
+                choose = request.values.get("choose")
+                time = int(request.values.get("time"))
+
                 cursor = mysql.connection.cursor()
                 cursor.execute(
-                    '''INSERT INTO PLAYS VALUES ("%s","%s","%s",SYSDATE(),"%s","%s",'''%(session["email"], match[0][0], match[0][1], match[0][2], match[0][3]))
+                    '''SELECT QuestionTime FROM QUESTION WHERE QuestionId="%s" ''' %level)
+                question_time = cursor.fetchone()
+                cursor.close()
+
+                cursor = mysql.connection.cursor()
+                cursor.execute(
+                    '''SELECT Correct FROM CHOOSE WHERE QuestionId="%s" AND ChooseText = "%s"''' %(level, choose))
+                result = cursor.fetchone()
+                cursor.close()
+                if(result == 1 and time>0):
+                    score = 50
+                    if(question_time - time > question_time/1.5):
+                        score = score+50
+
+                    if (question_time - time > question_time / 2):
+                        score = score + 40
+
+                    if (question_time - time > question_time / 2.5):
+                        score = score + 30
+
+                    if (question_time - time > question_time / 3):
+                        score = score + 20
+
+                    if (question_time - time > question_time ):
+                        score = score + 10
+                else:
+                    score = 0
+
+                cursor = mysql.connection.cursor()
+                cursor.execute(
+                    '''INSERT INTO PLAYS VALUES( "%s","%s","%s",CURRENT_DATE,"%s","%s")''' % (session["email"], level, score, choose, time )
+                )
+                mysql.connection.commit()
                 cursor.close()
                 return redirect("/protected_area")
+
 
 @app.route("/profile")
 def profile():

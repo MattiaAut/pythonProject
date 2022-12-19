@@ -14,17 +14,19 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
     <script type="text/javascript">
-    function countDown(secs, elem){
-      var element = document.getElementById(elem)
-      element.innerHTML = "Time left: " +secs;
-      if(secs<1){
-        clearTimeout(timer);
-        element.innerHTML = "TOO SLOW, TIME OUT";
-        //blocca l'input
+    var timeleft = {{question_time}};
+    var countDown = setInterval(function(){
+      if(timeleft <= 0){
+        clearInterval(countDown);
+        document.getElementById("countdown").innerHTML = "0";
+      } else {
+        let mycount=document.getElementById("countdown")
+          mycount.innerHTML = timeleft;
+        let output = document.getElementById("timespent");
+        output.value = mycount.textContent;
       }
-      secs--;
-      var timer = setTimeout('countDown('+secs+',"'+elem+'")',1000);
-}
+      timeleft -= 1;
+    }, 1000);
     </script>
 </head>
 <body>
@@ -40,15 +42,15 @@
   <div id="main-container">
       {% block content %}
       {%if difficulty == 'easy':%}
-        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
+        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p></h1>
       <center><h3 style="color:lightseagreen;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
-        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
+        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p></h1>
         <center><h3 style="color:green;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'hard':%}
-        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
+        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p><</h1>
         <center><h3 style="color:darkred;">Question: {{question_text}}</h3></center>
       {% endif %}
 
@@ -92,10 +94,10 @@
                   <div class="row" style="width:100%">
                     {% for row in choose: %}
                         <div class="col-sm-5" style="width:45%; height:100px; border-style: double; margin-top:10px; margin-bottom:10px; margin-left:10px; margin-right:10px;">
-                            <form class="rounded" style="width:100%; height:100%;" method="POST" action="/gamesaved" onsubmit="return confirm('Do you really want to submit this response?');">
+                            <form name="save" class="rounded" style="width:100%; height:100%;" method="POST" action="/gamesaved" onsubmit="return confirm('Do you really want to submit this response?');">
                                 <button type="submit" style=" font-family: 'DisposableDroidBB', sans-serif; width:100%; height:100%;" class="btn btn-outline-dark" name="choose"  id="level" value={{choose[loop.index-1][0]}}>{{choose[loop.index-1][0]}}</button>
-                                <input type="hidden" name="question_id" value={{question_id}}/>
-                                <input type="hidden" name="time" value={{question_time}}-{{time_spent}}/>
+                                <input type="hidden" name="question_id" value={{level}}>
+                                <input type="hidden" name="time" id="timespent">
                             </form>
                         </div>
                     {% endfor %}
