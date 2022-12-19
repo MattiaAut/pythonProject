@@ -188,7 +188,6 @@ def gamesaved():
             if request.method == 'POST':
                 form_data = request.values.get("")
                 match=form_data
-                # INSERT INTO PLAYS(email, questionid, score, date, choose, time)
                 # calcola il punteggio score=
                 cursor = mysql.connection.cursor()
                 cursor.execute(
