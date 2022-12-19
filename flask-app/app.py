@@ -219,7 +219,64 @@ def query():
         if role[0] == 1:
             return render_template('query.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
 
+@app.route("/addchoose")
+def addlevel():
 
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    elif session["username"] is None:
+        abort(401)
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
+        userrole1 = cursor.fetchone()
+        cursor.close()
+        if userrole1[0] == 1:
+            return render_template('addchoose.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+
+@app.route("/addquestion")
+def addquestion():
+
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    elif session["username"] is None:
+        abort(401)
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
+        userrole2 = cursor.fetchone()
+        cursor.close()
+        if userrole2[0] == 1:
+            return render_template('addquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+@app.route("/insertquestion")
+def insertquestion():
+
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    elif session["username"] is None:
+        abort(401)
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
+        userrole4 = cursor.fetchone()
+        cursor.close()
+        if userrole4[0] == 1:
+            return render_template('insertquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+
+@app.route("/insertchoose")
+def insertchoose():
+
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    elif session["username"] is None:
+        abort(401)
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
+        userrole3 = cursor.fetchone()
+        cursor.close()
+        if userrole3[0] == 1:
+            return render_template('insertchoose.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
 @app.route("/logout")
 def logout():
     session.clear()
