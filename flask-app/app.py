@@ -205,7 +205,6 @@ def gamesaved():
 
                 result=int(result_tuple[0])
 
-                print(question_time - abs(time))
                 if(result == 1 and question_time - abs(time) > 0):
                     if(abs(time) > question_time/1.5):
                         score = 100
@@ -252,38 +251,14 @@ def query():
         cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
         role = cursor.fetchone()
         cursor.close()
+
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT QuestionId FROM QUESTION''')
+        question_id = cursor.fetchall()
+        cursor.close()
         if role[0] == 1:
-            return render_template('query.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+            return render_template('query.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], question_id=question_id)
 
-@app.route("/addchoose")
-def addlevel():
-
-    if "google_id" not in session:
-        abort(401)  # Authorization required
-    elif session["username"] is None:
-        abort(401)
-    else:
-        cursor = mysql.connection.cursor()
-        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
-        userrole1 = cursor.fetchone()
-        cursor.close()
-        if userrole1[0] == 1:
-            return render_template('addchoose.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
-
-@app.route("/addquestion")
-def addquestion():
-
-    if "google_id" not in session:
-        abort(401)  # Authorization required
-    elif session["username"] is None:
-        abort(401)
-    else:
-        cursor = mysql.connection.cursor()
-        cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
-        userrole2 = cursor.fetchone()
-        cursor.close()
-        if userrole2[0] == 1:
-            return render_template('addquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
 @app.route("/insertquestion", methods = ['GET','POST'])
 def insertquestion():
 
@@ -297,16 +272,19 @@ def insertquestion():
         userrole4 = cursor.fetchone()
         cursor.close()
         if userrole4[0] == 1 and request.method == 'GET':
-            questionid = request.values.get("questionid")
             questiontext = request.values.get("questiontext")
             questioncode = request.values.get("questioncode")
             correctoutput = request.values.get("correctoutput")
-            questiontime = request.value.get("questiontime")
+            questiontime = request.values.get("questiontime")
             difficulty = request.values.get("difficulty")
             cursor = mysql.connection.cursor()
-            cursor.execute('''#INSERT INTO QUESTION VALUES ("%s","%s","%s","%s","%s","%s","%s","%s")''' %(questionid, questiontext, questioncode, correctoutput, datetime.date.today(), difficulty, session['email'], questiontime))
+            cursor.execute('''INSERT INTO QUESTION(QuestionText, QuestionCode, CorrectOutput, QuestionDate, Difficulty, UserEmail, QuestionTime) VALUES ("%s","%s","%s","%s","%s","%s","%s")''' %( questiontext, questioncode, correctoutput, datetime.date.today(), difficulty, session['email'], questiontime))
+            mysql.connection.commit()
             cursor.close()
-            return render_template('insertquestion.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+            return redirect("/query")
+        else:
+            return redirect("/query")
+
 
 @app.route("/insertchoose")
 def insertchoose():
@@ -320,8 +298,8 @@ def insertchoose():
         cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
         userrole3 = cursor.fetchone()
         cursor.close()
-        if userrole3[0] == 1:
-            return render_template('insertchoose.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"])
+        return redirect("/query")
+
 @app.route("/logout")
 def logout():
     session.clear()

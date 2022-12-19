@@ -15,25 +15,101 @@
 </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="pagination justify-content-end" style="width:100%; height:100%">
-                    <a class="navbar-brand" href="/flask-app/static"><img src="" width="250" height="35" style="position:absolute; left:0;" alt=""></span></a>
-                <div style="align-items: self-end">
-                    <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-light'>Exit</button></a>
+          <a class="navbar-brand" href="/protected_area"><img src="" width="250" height="30" style="margin-left:5px;"></a>
+          <div class="pagination justify-content-end" style="width:100%; height:100%">
+                  <div style="align-items: self-end">
+                      <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif; margin-right:5px;' class='btn btn-outline-light'>Exit</button></a>
+                  </div>
+              </div>
+          </nav>
+
+        <div id="main-container">
+            <h1 align="center"> HI ADMIN {{username}}</h1>
+            <h3 align="center" style="text-transform: uppercase; font-size: 25px">What do you add in your database?</br></h3>
+            <div class="row" style="width: 100%">
+                <div class="col-sm-6">
+                    <center>
+                        <form action="/insertchoose">
+                          <label style="color: black">Choose Text:</label><br>
+                          <input type="text" id="choosetext" name="choosetext" value=""><br>
+                          <label style="color: black">Id Question:</label><br>
+                          <select name="questionid" id="questionid">
+                              {% block content%}
+                              {% for row in question_id:%}
+                                <option value="{{question_id[loop.index-1][0]}}">{{question_id[loop.index-1][0]}}</option>
+                              {%endfor%}
+                              {% endblock%}
+
+                          </select><br><br>
+                          <label style="color: black">Correct:</label><br>
+                          <select name="choosecorrect" id="choosecorrect">
+                              <option value="1">YES</option>
+                              <option value="0">NO</option>
+                          </select><br><br>
+                          <input type="submit" value="send all">
+                        </form>
+                    </center>
                 </div>
-            </div>
-        </nav>
-            <div id="main-container">
-                <h1 align="center"> HI ADMIN {{username}}</h1>
-                <h3 align="center" style="text-transform: uppercase; font-size: 25px">What do you add in your database?</br></h3>
-                <div>
-                    <form name="add-level-form" id="level-form" class="needs-validation" METHOD="GET" ACTION="/addchoose">
-                        <div style="float: left; width: 200px"><center><button type="submit" style="height:38px; font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="add-level"  id="add-level">ADD CHOOSE</button></center></div>
-                   </form>
-                    <form name="add-question-form" id="question-form" class="needs-validation" METHOD="GET" ACTION="/addquestion">
-                        <div style="float: right; width: 200px"><center><button type="submit" style="height:38px; font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="add-question"  id="add-question">ADD QUESTION</button></center></div>
+                <div class="col-sm-6">
+                    <center>
+                    <form name="invio" style="margin-left: 10px">
+                      <label style="color: black">Question Text:</label><br>
+                      <input type="text" id="questiontext" name="questiontext" value=""><br>
+                        <label style="color: black">Question Code:</label><br>
+                      <input type="text" id="questioncode" name="questioncode" value=""><br><br>
+                      <label style="color: black">Correct Output:</label><br>
+                        <input type="text" id="correctoutput" name="correctoutput" value=""><br><br>
+                      <label style="color: black">Difficulty:</label><br>
+                        <select id="difficulty" name="difficulty" value="">
+                            <option value="easy">EASY</option>
+                            <option value="amateur">AMATEUR</option>
+                            <option value="hard">HARD</option>
+                        </select><br><br>
+                      <label style="color: black">Question Time:</label><br>
+                      <input type="number" id="questiontime" name="questiontime" value=""><br><br>
+                      <input type="submit" value="Invia" onclick=valida()>
                     </form>
+                    </center>
+                <script type="text/javascript">
+                    function valida() {
+                    // Variabili associate ai campi del modulo
+                           var questiontext = document.invio.questiontext.value;
+                           var questiontime = document.invio.questiontime.value;
+                           var questioncode = document.invio.questioncode.value;
+                           var difficulty = document.invio.difficulty.value;
+                           var correctoutput = document.invio.correctoutput.value;
+                           if (questiontext == "") {
+                              alert("You have to insert the text of the question");
+                              document.invio.questiontext.focus();
+                                return false;}
+                           if (questioncode == "") {
+                              alert("You have to insert the text of the question code");
+                              document.invio.questiontext.focus();
+                                return false;}
+                          if (questiontime == "") {
+                              alert("You have to insert the time necessary to resolve the question");
+                              document.invio.questiontext.focus();
+                                return false;}
+                          if (difficulty == "") {
+                              alert("You have to insert the difficulty");
+                              document.invio.questiontext.focus();
+                                return false;
+                          }
+                          if(correctoutput == ""){
+                              alert("You have to insert the correct output");
+                              document.invio.questiontext.focus();
+                              return false;
+                          }
+
+                          else {
+                              document.invio.action = "/insertquestion";
+                              document.invio.submit();
+                           }
+                        }
+                </script>
                 </div>
             </div>
+        </div>
 
 
         <!--Footer-->
