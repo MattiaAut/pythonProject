@@ -14,30 +14,17 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
     <script type="text/javascript">
-    var c=parseInt({{question_time}});
-    var t;
-    var timer_is_on=1;
-
-    function timedCount()
-    {
-        document.getElementById("timer").innerHTML = c
-        c=c-1;
-        t=setTimeout("timedCount()",1000);
-        if(c < 0) {
-            clearTimeout(t);
-            timer_is_on=0;
-        }
-    }
-
-    function doTimer()
-    {
-        if (!timer_is_on)
-          {
-              timer_is_on=1;
-              timedCount();
-          }
-    }
-    doTimer();
+    function countDown(secs, elem){
+      var element = document.getElementById(elem)
+      element.innerHTML = "Time left: " +secs;
+      if(secs<1){
+        clearTimeout(timer);
+        element.innerHTML = "TOO SLOW, TIME OUT";
+        //blocca l'input
+      }
+      secs--;
+      var timer = setTimeout('countDown('+secs+',"'+elem+'")',1000);
+}
     </script>
 </head>
 <body>
@@ -53,15 +40,15 @@
   <div id="main-container">
       {% block content %}
       {%if difficulty == 'easy':%}
-        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br>Time left: <p id="timer"></p></h1>
+        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
       <center><h3 style="color:lightseagreen;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
-        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br>Time left: <p id="timer"></p></h1>
+        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
         <center><h3 style="color:green;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'hard':%}
-        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br>Time left: <p id="timer"></p></h1>
+        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br><p id="status"></p><script>countDown({{question_time}},"status")</script></h1>
         <center><h3 style="color:darkred;">Question: {{question_text}}</h3></center>
       {% endif %}
 
