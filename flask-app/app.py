@@ -193,40 +193,42 @@ def gamesaved():
                 cursor = mysql.connection.cursor()
                 cursor.execute(
                     '''SELECT QuestionTime FROM QUESTION WHERE QuestionId="%s" ''' %level)
-                question_time = cursor.fetchone()
+                question_time_tuple = cursor.fetchone()
                 cursor.close()
 
+                question_time=int(question_time_tuple[0])
                 cursor = mysql.connection.cursor()
                 cursor.execute(
                     '''SELECT Correct FROM CHOOSE WHERE QuestionId="%s" AND ChooseText = "%s"''' %(level, choose))
-                result = cursor.fetchone()
+                result_tuple = cursor.fetchone()
                 cursor.close()
-                if(result == 1 and time>0):
-                    score = 50
-                    if(question_time - time > question_time/1.5):
-                        score = score+50
 
-                    if (question_time - time > question_time / 2):
-                        score = score + 40
+                result=int(result_tuple[0])
 
-                    if (question_time - time > question_time / 2.5):
-                        score = score + 30
+                print(question_time - abs(time))
+                if(result == 1 and question_time - abs(time) > 0):
+                    if(abs(time) > question_time/1.5):
+                        score = 100
+                    elif (abs(time) > question_time/2):
+                        score = 90
+                    elif (abs(time) > question_time/2.5):
+                        score = 80
+                    elif (abs(time) > question_time/3):
+                        score = 70
+                    else:
+                        score = 60
 
-                    if (question_time - time > question_time / 3):
-                        score = score + 20
-
-                    if (question_time - time > question_time ):
-                        score = score + 10
                 else:
                     score = 0
 
                 cursor = mysql.connection.cursor()
                 cursor.execute(
-                    '''INSERT INTO PLAYS VALUES( "%s","%s","%s",CURRENT_DATE,"%s","%s")''' % (session["email"], level, score, choose, time )
+                    '''INSERT INTO PLAYS(UserEmail,QuestionId,GameScore,DatePlayed,UserInput,TimeSpent ) VALUES( "%s","%s","%s",CURRENT_DATE,"%s","%s")''' % (session["email"], level, score, choose, question_time - time )
                 )
                 mysql.connection.commit()
                 cursor.close()
                 return redirect("/protected_area")
+
 
 
 @app.route("/profile")
