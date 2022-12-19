@@ -163,7 +163,6 @@ def game():
         else:
             if request.method == 'GET':
                 form_data = request.values.get("level")
-
             level_choosed=form_data
             # search date from level choosed
             cursor = mysql.connection.cursor()
@@ -176,8 +175,26 @@ def game():
                 '''SELECT ChooseText FROM CHOOSE WHERE QuestionId = "%s"''' % level_choosed)
             choose = cursor.fetchall()
             cursor.close()
+            return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],question_time=list_of_tuples[0][3], choose=choose, time_spent=0)
 
-            return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],question_time=list_of_tuples[0][3], choose=choose)
+@app.route("/gamesaved", methods=['GET', 'POST'])
+def gamesaved():
+    if "google_id" not in session:
+        abort(401)  # Authorization required
+    else:
+        if session["username"] is None:
+            abort(401)
+        else:
+            if request.method == 'POST':
+                form_data = request.values.get("")
+                match=form_data
+                # INSERT INTO PLAYS(email, questionid, score, date, choose, time)
+                # calcola il punteggio score=
+                cursor = mysql.connection.cursor()
+                cursor.execute(
+                    '''INSERT INTO PLAYS VALUES ("%s","%s","%s",SYSDATE(),"%s","%s",'''%(session["email"], match[0][0], match[0][1], match[0][2], match[0][3]))
+                cursor.close()
+                return redirect("/protected_area")
 
 @app.route("/profile")
 def profile():
