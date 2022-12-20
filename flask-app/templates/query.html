@@ -61,15 +61,16 @@
                            }
                            if (questionid == "") {
                               alert("You have to insert the question id");
-                              document.form1.questionid.focus();
+                              document.form1.choosetext.focus();
                               return false;
                            }
                           if (choosecorrect == "") {
                               alert("You have to insert if this choose is the correct or no");
-                              document.form1.questiontext.focus();
+                              document.form1.choosetext.focus();
                               return false;
                           }
                           else {
+                              alert('sto entrando')
                               document.form1.action = "/insertchoose";
                               document.form1.submit();
                            }
