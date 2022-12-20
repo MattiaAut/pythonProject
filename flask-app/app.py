@@ -282,8 +282,6 @@ def insertquestion():
             mysql.connection.commit()
             cursor.close()
             return redirect("/query")
-        else:
-            return redirect("/query")
 
 
 @app.route("/insertchoose")
@@ -298,7 +296,15 @@ def insertchoose():
         cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' % (session["email"]))
         userrole3 = cursor.fetchone()
         cursor.close()
-        return redirect("/query")
+        if userrole3[0] == 1 and request.method == 'GET':
+            choosetext = request.values.get("choosetext")
+            questionid = request.values.get("questionid")
+            choosecorrect = request.values.get("choosecorrect")
+            cursor = mysql.connection.cursor()
+            cursor.execute('''INSERT INTO CHOOSE(ChooseText, QuestionId, Correct) VALUES ("%s","%s","%s")''' % (choosetext, questionid, choosecorrect))
+            mysql.connection.commit()
+            cursor.close()
+            return redirect("/query")
 
 @app.route("/logout")
 def logout():

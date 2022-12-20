@@ -29,7 +29,7 @@
             <div class="row" style="width: 100%">
                 <div class="col-sm-6">
                     <center>
-                        <form action="/insertchoose">
+                        <form name="form1" action="/insertchoose">
                           <label style="color: black">Choose Text:</label><br>
                           <input type="text" id="choosetext" name="choosetext" value=""><br>
                           <label style="color: black">Id Question:</label><br>
@@ -39,16 +39,42 @@
                                 <option value="{{question_id[loop.index-1][0]}}">{{question_id[loop.index-1][0]}}</option>
                               {%endfor%}
                               {% endblock%}
-
                           </select><br><br>
                           <label style="color: black">Correct:</label><br>
                           <select name="choosecorrect" id="choosecorrect">
                               <option value="1">YES</option>
                               <option value="0">NO</option>
                           </select><br><br>
-                          <input type="submit" value="send all">
+                          <input type="submit" value="Send all" onclick=valida1()>
                         </form>
                     </center>
+                     <script type="text/javascript">
+                    function valida1() {
+                    // Variabili associate ai campi del modulo
+                           var choosetext = document.form1.choosetext.value;
+                           var questionid = document.form1.questionid.value;
+                           var choosecorrect = document.form1.choosecorrect.value;
+                           if (choosetext == "") {
+                              alert("You have to insert the text of the choose");
+                              document.form1.choosetext.focus();
+                              return false;
+                           }
+                           if (questionid == "") {
+                              alert("You have to insert the question id");
+                              document.form1.questionid.focus();
+                              return false;
+                           }
+                          if (choosecorrect == "") {
+                              alert("You have to insert if this choose is the correct or no");
+                              document.form1.questiontext.focus();
+                              return false;
+                          }
+                          else {
+                              document.form1.action = "/insertchoose";
+                              document.form1.submit();
+                           }
+                        }
+                </script>
                 </div>
                 <div class="col-sm-6">
                     <center>
@@ -67,11 +93,11 @@
                         </select><br><br>
                       <label style="color: black">Question Time:</label><br>
                       <input type="number" id="questiontime" name="questiontime" value=""><br><br>
-                      <input type="submit" value="Invia" onclick=valida()>
+                      <input type="submit" value="Send all" onclick=valida2()>
                     </form>
                     </center>
                 <script type="text/javascript">
-                    function valida() {
+                    function valida2() {
                     // Variabili associate ai campi del modulo
                            var questiontext = document.invio.questiontext.value;
                            var questiontime = document.invio.questiontime.value;
