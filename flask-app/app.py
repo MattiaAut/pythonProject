@@ -193,8 +193,7 @@ def gamesaved():
             if request.method == 'POST':
                 level = request.values.get("question_id")
                 choose = request.values.get("choose")
-                time = int(request.values.get("time"))
-
+                time = int((request.values.get("time")))
                 cursor = mysql.connection.cursor()
                 cursor.execute(
                     '''SELECT QuestionTime FROM QUESTION WHERE QuestionId="%s" ''' %level)

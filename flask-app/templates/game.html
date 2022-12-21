@@ -42,11 +42,8 @@
       timeleft -= 1;
     }, 1000);
 
-    function change(value){
-        if (value == 1) document.getElementById("timespent1").value= timeleft
-        if (value == 2) document.getElementById("timespent2").value= timeleft
-        if (value == 3) document.getElementById("timespent3").value= timeleft
-        if (value == 4) document.getElementById("timespent4").value= timeleft
+    function change(){
+        document.getElementById("timespent").value= timeleft
           }
     </script>
     <!----------------------------------------------------PROGRESSIVE WEB APP--------------------------------------------------------------->
@@ -80,15 +77,15 @@
   <div id="main-container">
       {% block content %}
       {%if difficulty == 'easy':%}
-        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p></h1>
+        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
       <center><h3 style="color:lightseagreen;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
-        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p></h1>
+        <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
         <center><h3 style="color:green;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'hard':%}
-        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown"></p><</h1>
+        <h1 align="center" style="text-transform: uppercase; color:darkred;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
         <center><h3 style="color:darkred;">Question: {{question_text}}</h3></center>
       {% endif %}
 
@@ -128,42 +125,50 @@
           <div class="mh-100" style="width:4%;"></div>
 
           {% if difficulty == 'easy'%}
-          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
-                  <div class="row" style="width:100%">
-                    {% for row in choose: %}
-                        <div class="col-sm-5" style="width:45%; height:100px; border-style: double; margin-top:10px; margin-bottom:10px; margin-left:10px; margin-right:10px;">
-                            <form name="save" class="rounded" style="width:100%; height:100%;" method="POST" action="/gamesaved" onsubmit="return confirm('Do you really want to submit this response?');">
-                                <button onclick="change({{loop.index}})" type="submit" style=" font-family: 'DisposableDroidBB', sans-serif; width:100%; height:100%;" class="btn btn-outline-dark" name="choose"  id="level" value="{{choose[loop.index-1][0]}}">{{choose[loop.index-1][0]}}</button>
-                                <input type="hidden" name="question_id" value={{level}}>
-                                <input type="hidden" name="time" id="timespent{{loop.index}}">
-                            </form>
-                        </div>
-                    {% endfor %}
+            <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
+                <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
+                {% for row in choose: %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
+                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
                     </div>
+                        <input type="hidden" name="question_id" value={{level}}>
+                    {% endfor %}
+                <button onclick="change()" type="submit" style=" font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="time" id="timespent">Submit</button>
+                </form>
+            </div>
           </div>
           {% endif %}
 
           {% if difficulty == 'amateur'%}
           <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
-                  <div class="row" style="width:100%">
-                    {% for row in choose: %}
-                        <div class="col-sm-5" style="width:45%; height:100px; border-style: double; margin-top:10px; margin-bottom:10px; margin-left:10px; margin-right:10px;">
-                            <form name="save" class="rounded" style="width:100%; height:100%;" method="POST" action="/gamesaved" onsubmit="return confirm('Do you really want to submit this response?');">
-                                <button onclick="change({{loop.index}})" type="submit" style=" font-family: 'DisposableDroidBB', sans-serif; width:100%; height:100%;" class="btn btn-outline-dark" name="choose"  id="level" value="{{choose[loop.index-1][0]}}">{{choose[loop.index-1][0]}}</button>
-                                <input type="hidden" name="question_id" value={{level}}>
-                                <input type="hidden" name="time" id="timespent{{loop.index}}">
-                            </form>
-                        </div>
-                    {% endfor %}
+                <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
+                {% for row in choose: %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
+                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
                     </div>
+                        <input type="hidden" name="question_id" value={{level}}>
+                    {% endfor %}
+                <button onclick="change()" type="submit" style=" font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="time" id="timespent">Submit</button>
+                </form>
+            </div>
           </div>
           {% endif %}
 
           {% if difficulty == 'hard':%}
-          <div class="mh-100" style="width:48%; height:340px; background-color:#eee; border-style: double;">
-                <div class="mh-100" style="width:100%; height:100%; border-style: double;">
-                    <input type="text" style=" font-family: 'DisposableDroidBB', sans-serif; width:100%; height:100%;" placeholder="Insert code" name="user_text"  id="user_text">
-                </div>
+          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
+                <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
+                {% for row in choose: %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
+                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
+                    </div>
+                        <input type="hidden" name="question_id" value={{level}}>
+                    {% endfor %}
+                <button onclick="change()" type="submit" style=" font-family: 'DisposableDroidBB', sans-serif;" class="btn btn-outline-dark" name="time" id="timespent">Submit</button>
+                </form>
+            </div>
           </div>
           {% endif %}
           {%endblock %}
