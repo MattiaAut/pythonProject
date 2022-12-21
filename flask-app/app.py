@@ -9,7 +9,7 @@ import flask
 import flask_mysqldb
 import datetime
 import google.auth.transport.requests
-from flask import Flask, session, abort, redirect, request, render_template, flash, app
+from flask import Flask, session, abort, redirect, request, render_template, flash, app, jsonify
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
@@ -52,6 +52,10 @@ def login_is_required(function):
             else:
                 return function()
     return wrapper
+
+@app.route("/manifest.json")
+def manifest():
+    return jsonify(manifest_python_object)
 
 @app.route("/")
 def index():
@@ -300,11 +304,27 @@ def insertchoose():
             choosetext = request.values.get("choosetext")
             questionid = request.values.get("questionid")
             choosecorrect = request.values.get("choosecorrect")
-            cursor = mysql.connection.cursor()
-            cursor.execute('''INSERT INTO CHOOSE(ChooseText, QuestionId, Correct) VALUES ("%s","%s","%s")''' % (choosetext, questionid, choosecorrect))
-            mysql.connection.commit()
-            cursor.close()
-            return redirect("/query")
+            if choosecorrect == "1":
+                cursor = mysql.connection.cursor()
+                cursor.execute('''SELECT COUNT(*) FROM CHOOSE WHERE QuestionId = "%s" and Correct = 1''' %questionid)
+                CountCorrect = cursor.fetchone()
+                cursor.close()
+                if CountCorrect[0] > 0:
+                    return redirect("/query")
+                else :
+                    cursor = mysql.connection.cursor()
+                    cursor.execute('''INSERT INTO CHOOSE(ChooseText, QuestionId, Correct) VALUES ("%s","%s","%s")''' % (
+                    choosetext, questionid, choosecorrect))
+                    mysql.connection.commit()
+                    cursor.close()
+                    return redirect("/query")
+            else :
+                cursor = mysql.connection.cursor()
+                cursor.execute('''INSERT INTO CHOOSE(ChooseText, QuestionId, Correct) VALUES ("%s","%s","%s")''' % (
+                choosetext, questionid, choosecorrect))
+                mysql.connection.commit()
+                cursor.close()
+                return redirect("/query")
 
 @app.route("/logout")
 def logout():

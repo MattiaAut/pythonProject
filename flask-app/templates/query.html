@@ -46,7 +46,7 @@
             <div class="row" style="width: 100%">
                 <div class="col-sm-6">
                     <center>
-                        <form name="form1" action="/insertchoose">
+                        <form name="form1">
                           <label style="color: black">Choose Text:</label><br>
                           <input type="text" id="choosetext" name="choosetext" value=""><br>
                           <label style="color: black">Id Question:</label><br>
@@ -87,7 +87,6 @@
                               return false;
                           }
                           else {
-                              alert('sto entrando')
                               document.form1.action = "/insertchoose";
                               document.form1.submit();
                            }
