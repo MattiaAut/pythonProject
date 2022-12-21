@@ -105,6 +105,10 @@ def callback():
 
     return redirect("/protected_area")
 
+@app.route('/sw.js', methods=['GET'])
+def sw():
+    return app.send_static_file('sw.js')
+
 @app.route("/choose_username")
 def choose_username():
     global error
