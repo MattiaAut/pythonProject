@@ -44,24 +44,29 @@
             <div class="row" style="width: 100%">
                 <div class="col-sm-6">
                     <center>
+                        <div style="width:50%; border-style: solid">
+                            <center><h3 style="text-transform: uppercase; font-size: 25px"> insert choose</h3></center>
                         <form name="form1">
-                          <label style="color: black">Choose Text:</label><br>
-                          <input type="text" id="choosetext" name="choosetext" value=""><br>
-                          <label style="color: black">Id Question:</label><br>
-                          <select name="questionid" id="questionid">
+                          <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosetext">Choose Text</label>
+                          <input style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" type="text" class="form-control" id="choosetext" name="choosetext" value="">
+                          <label style="width:50%; margin-top: 10px" class="input-group-text" for="questionid">Question Id</label>
+                          <select style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-select" id="questionid" name="questionid">
+                            <option selected>Choose...</option>
                               {% block content%}
                               {% for row in question_id:%}
                                 <option value="{{question_id[loop.index-1][0]}}">{{question_id[loop.index-1][0]}}</option>
                               {%endfor%}
                               {% endblock%}
-                          </select><br><br>
-                          <label style="color: black">Correct:</label><br>
-                          <select name="choosecorrect" id="choosecorrect">
+                          </select>
+                          <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosecorrect">Correct</label>
+                          <select style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-select" id="choosecorrect" name="choosecorrect">
+                            <option selected>Choose...</option>
                               <option value="1">YES</option>
                               <option value="0">NO</option>
-                          </select><br><br>
-                          <input type="submit" value="Send all" onclick=valida1()>
+                          </select>
+                          <input style="margin-bottom: 5px; margin-top: 10px; font-family: DisposableDroidBB, sans-serif;" class="btn btn-outline-secondary" type="submit" value="Send all" onclick=valida1()>
                         </form>
+                        </div>
                     </center>
                      <script type="text/javascript">
                     function valida1() {
@@ -93,24 +98,26 @@
                 </div>
                 <div class="col-sm-6">
                     <center>
+                    <div style="width:50%; border-style: solid">
+                        <center><h3 style="text-transform: uppercase; font-size: 25px"> insert question</h3></center>
                     <form name="invio" style="margin-left: 10px">
-                      <label style="color: black">Question Text:</label><br>
-                      <input type="text" id="questiontext" name="questiontext" value=""><br>
-                        <label style="color: black">Question Code:</label><br>
-                      <input type="text" id="questioncode" name="questioncode" value=""><br><br>
-                      <label style="color: black">Correct Output:</label><br>
-                        <input type="text" id="correctoutput" name="correctoutput" value=""><br><br>
-                      <label style="color: black">Difficulty:</label><br>
-                        <select id="difficulty" name="difficulty" value="">
+                      <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosetext">Question Text</label>
+                      <input style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-control" type="text" id="questiontext" name="questiontext" value="">
+                        <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosetext">Question Code</label>
+                      <input style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-control"type="text" id="questioncode" name="questioncode" value="">
+                      <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosetext">Correct Output</label>
+                        <input style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-control"type="text" id="correctoutput" name="correctoutput" value="">
+                      <label style="width:50%" class="input-group-text" for="difficulty">Correct</label>
+                          <select style="width:50%; font-family: DisposableDroidBB, sans-serif;" class="form-select" id="difficulty" name="difficulty">
                             <option value="easy">EASY</option>
                             <option value="amateur">AMATEUR</option>
                             <option value="hard">HARD</option>
-                        </select><br><br>
-                      <label style="color: black">Question Time:</label><br>
-                      <input type="number" id="questiontime" name="questiontime" value=""><br><br>
-                      <input type="submit" value="Send all" onclick=valida2()>
+                        </select>
+                      <label style="width:50%; margin-top: 10px" class="input-group-text" for="choosetext">Question Time</label>
+                      <input style="width:50%; margin-bottom: 5px; font-family: DisposableDroidBB, sans-serif;" class="form-control" type="number" id="questiontime" name="questiontime" value="">
+                      <input style="margin-bottom: 5px; margin-top: 10px; font-family: DisposableDroidBB, sans-serif;" class="btn btn-outline-secondary" type="submit" value="Send all" onclick=valida2()>
                     </form>
-                    </center>
+
                 <script type="text/javascript">
                     function valida2() {
                     // Variabili associate ai campi del modulo
@@ -148,13 +155,15 @@
                            }
                         }
                 </script>
+                    </div>
+                </center>
                 </div>
             </div>
         </div>
 
 
         <!--Footer-->
-        <footer class="bg-dark text-center text-white" id="footer">
+        <footer style="position:relative" class="bg-dark text-center text-white" id="footer">
             <div class="container p-4 pb-0">
                 <!-- Section: Social media -->
                 <section>
