@@ -22,20 +22,20 @@
       {% endif %}
     {% endwith %}
     {% block body %}{% endblock %}
-    <----------------------------------------------------PROGRESSIVE WEB APP--------------------------------------------------------------->
+    <!----------------------------------------------------PROGRESSIVE WEB APP--------------------------------------------------------------->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#cc194b"/>
 
-    Favicon del Sito Web
+    <!--Favicon del Sito Web-->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    Meta Tag Specifici per iOS
+    <!--Meta Tag Specifici per iOS-->
     <link rel="apple-touch-icon" href="images/152x152.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="PWA Esempio">
 
 
-    Meta Tag Specifici per OS Windows
+    <!--Meta Tag Specifici per OS Windows-->
     <meta name="application-name" content="PWA Esempio" />
     <meta name="msapplication-TileImage" content="images/144x144.png">
     <meta name="msapplication-TileColor" content="#cc194b">
@@ -76,5 +76,14 @@ for (i = 0; i < close.length; i++) {
 	</form>
 </div>
 </center>
+<script async>
+    window.onload = () => {
+    'use strict';
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+    .register('./service-worker.js');
+    }
+    }
+</script>
 </body>
 </html>

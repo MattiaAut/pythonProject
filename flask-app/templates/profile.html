@@ -12,47 +12,56 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-    <----------------------------------------------------PROGRESSIVE WEB APP--------------------------------------------------------------->
+    <!----------------------------------------------------PROGRESSIVE WEB APP--------------------------------------------------------------->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#cc194b"/>
 
-    Favicon del Sito Web
+    <!--Favicon del Sito Web-->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    Meta Tag Specifici per iOS
+    <!--Meta Tag Specifici per iOS-->
     <link rel="apple-touch-icon" href="images/152x152.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="PWA Esempio">
 
 
-    Meta Tag Specifici per OS Windows
+    <!--Meta Tag Specifici per OS Windows-->
     <meta name="application-name" content="PWA Esempio" />
     <meta name="msapplication-TileImage" content="images/144x144.png">
     <meta name="msapplication-TileColor" content="#cc194b">
 </head>
 <body style="background-color:black;">
-<center>
-<h2>Account Information</h2>
-<div class="mh-100" style="width: 350px; height:250px; background-color:#eee; border-style: double;">
-	<div class="form-col">
-        <h2>Your Data</h2>
-        <div class="col-md-11 mb-1 ">
-			<label for="Picture"><img src={{picture}} width="45" height="45px" class="rounded-circle" style="margin-top:5px"></label>
-        </div>
+    <center>
+    <h2>Account Information</h2>
+    <div class="mh-100" style="width: 350px; height:250px; background-color:#eee; border-style: double;">
+        <div class="form-col">
+            <h2>Your Data</h2>
+            <div class="col-md-11 mb-1 ">
+                <label for="Picture"><img src={{picture}} width="45" height="45px" class="rounded-circle" style="margin-top:5px"></label>
+            </div>
 
-        <div class="col-md-11 mb-1 ">
-			<label for="Username">Username: {{username}} </label>
-        </div>
+            <div class="col-md-11 mb-1 ">
+                <label for="Username">Username: {{username}} </label>
+            </div>
 
-        <div class="col-md-11 mb-1">
-            <label for="Email">Email: {{email}} </label>
-        </div>
+            <div class="col-md-11 mb-1">
+                <label for="Email">Email: {{email}} </label>
+            </div>
 
-        <div class="col-md-11 mb-3">
-                <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Exit</button></a>
+            <div class="col-md-11 mb-3">
+                    <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Exit</button></a>
+            </div>
         </div>
-	</div>
-</div>
-</center>
+    </div>
+    </center>
+    <script async>
+        window.onload = () => {
+        'use strict';
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+        .register('./service-worker.js');
+        }
+        }
+    </script>
 </body>
 </html>
