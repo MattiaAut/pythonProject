@@ -53,9 +53,6 @@ def login_is_required(function):
                 return function()
     return wrapper
 
-@app.route("/manifest.json")
-def manifest():
-    return jsonify(manifest_python_object)
 
 @app.route("/")
 def index():
