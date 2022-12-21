@@ -1,0 +1,16 @@
+{
+  "name": "FrontlineCode",
+  "short_name": "FC",
+  "lang": "en-US",
+  "start_url": "../",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "white",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}
