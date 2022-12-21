@@ -196,8 +196,11 @@ def gamesaved():
                 time = int((request.values.get("time")))
                 cursor = mysql.connection.cursor()
                 cursor.execute(
-                    '''SELECT QuestionTime FROM QUESTION WHERE QuestionId="%s" ''' %level)
-                question_time_tuple = cursor.fetchone()
+                    '''SELECT QuestionTime, QuestionText FROM QUESTION WHERE QuestionId="%s" ''' %level)
+                question = cursor.fetchall()
+                print(question)
+                question_time_tuple = question[0]
+                question_text=question_time_tuple[1]
                 cursor.close()
 
                 question_time=int(question_time_tuple[0])
@@ -230,8 +233,9 @@ def gamesaved():
                 )
                 mysql.connection.commit()
                 cursor.close()
-                return redirect("/protected_area")
-
+                return render_template('gamesaved.html', name=session["name"], email=session["email"],
+                                       username=session["username"], level=level, score=score, question_text=question_text,
+                                        choose=choose, timespent=question_time - time)
 
 
 @app.route("/profile")
