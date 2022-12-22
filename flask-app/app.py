@@ -155,6 +155,16 @@ def protected_area():
     cursor.execute('''SELECT Userrole FROM USER WHERE Useremail = "%s"''' %(session["email"]))
     role = cursor.fetchone()
     cursor.close()
+    """
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT GameScore, MAX(DatePlayed) 
+                      FROM plays 
+                      WHERE UserEmail="%s"
+                      GROUP BY QuestionId , UserEmail;''' % (session["email"]))
+    last_score = cursor.fetchall()
+    cursor.close()
+    print(last_score[0][0])
+    """
     return render_template('protected_area.html', name=session["name"], picture=session["photo"], email=session["email"], username=session["username"], questions=result[0], value=list_of_tuples, role=role[0])
 
 @app.route("/game", methods=['GET', 'POST'])
@@ -179,6 +189,7 @@ def game():
                 '''SELECT ChooseText FROM CHOOSE WHERE QuestionId = "%s"''' % level_choosed)
             choose = cursor.fetchall()
             cursor.close()
+
             return render_template('game.html', name=session["name"], email=session["email"], picture=session["photo"], username=session["username"], level=level_choosed, difficulty=list_of_tuples[0][0], question_text=list_of_tuples[0][1], question_code=list_of_tuples[0][2],question_time=list_of_tuples[0][3], choose=choose, time_spent=0)
 
 @app.route("/gamesaved", methods=['GET', 'POST'])
@@ -208,6 +219,12 @@ def gamesaved():
                 result_tuple = cursor.fetchone()
                 cursor.close()
 
+                cursor = mysql.connection.cursor()
+                cursor.execute(
+                    '''SELECT ChooseText FROM CHOOSE WHERE QuestionId="%s" AND Correct = 1''' % (level))
+                correct = cursor.fetchone()
+                cursor.close()
+
                 result=int(result_tuple[0])
 
                 if(result == 1 and question_time - abs(time) > 0):
@@ -233,7 +250,7 @@ def gamesaved():
                 cursor.close()
                 return render_template('gamesaved.html', name=session["name"], email=session["email"],
                                        username=session["username"], level=level, score=score, question_text=question_text,
-                                        choose=choose, timespent=question_time - time)
+                                        choose=choose, timespent=question_time - time, correct=correct[0])
 
 
 @app.route("/profile")

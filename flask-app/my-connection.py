@@ -45,8 +45,9 @@ def create_db_connection(host_name, user_name, user_password, db_name):
   except Error as err:
     print(f"Error: '{err}'")
   return connection_database
+
 #END OF FUNCTION--------------------------------------------------------------------------
-drop_db="""DROP DATABASE FRONTLINECODE;"""
+drop_db="""DROP DATABASE FRONTLINECODE"""
 
 create_table_user="""
 CREATE TABLE IF NOT EXISTS USER
@@ -92,7 +93,7 @@ CREATE TABLE IF NOT EXISTS PLAYS
     UserEmail   varchar(50)     NOT NULL,
     QuestionId  int     NOT NULL,
     GameScore     int     NOT NULL,
-    DatePlayed  date    NOT NULL,
+    DatePlayed  datetime    NOT NULL,
     UserInput   varchar(1000)   NOT NULL,
     TimeSpent   int     NOT NULL,
     CONSTRAINT Plays_pk PRIMARY KEY (PlayId),
@@ -153,7 +154,7 @@ best_game_view="""
       GROUP BY UserEmail, QuestionId"""
 
 connection_server= create_server_connection ("localhost", "root","")
-execute_query(connection_database, drop_db)
+execute_query(connection_server, drop_db)
 create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
 create_database(connection_server,create_db_query)
 connection_database = create_db_connection("localhost", "root", "", "frontlinecode")
@@ -175,5 +176,7 @@ execute_query(connection_database, insert_choose2)
 execute_query(connection_database, insert_choose3)
 execute_query(connection_database, insert_choose4)
 execute_query(connection_database, best_game_view)
+
+
 
 

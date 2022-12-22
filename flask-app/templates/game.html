@@ -93,31 +93,31 @@
           {% if difficulty == 'easy'%}
           <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
-            <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">TAKE A CHOOSE</h2></center></div>
+            <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">TAKE A CHOICE</h2></center></div>
           {% endif %}
 
           {% if difficulty == 'amateur'%}
           <div class="mh-100" style="width:48%;"><center><h2 style="color: green">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
-            <div class="mh-100" style="width:48%;"><center><h2 style="color: green">TAKE A CHOOSE</h2></center></div>
+            <div class="mh-100" style="width:48%;"><center><h2 style="color: green">TAKE A CHOICE</h2></center></div>
           {% endif %}
 
           {% if difficulty == 'hard':%}
           <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
-            <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">INSERT TEXT</h2></center></div>
+            <div class="mh-100" style="width:48%;"><center><h2 style="color: darkred">TAKE A CHOICE</h2></center></div>
           {% endif %}
 
-          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
-                <div class="col-md-6">
+          <div class="mh-100 rounded" style="width:48%; height:320px; background-color:#eee; border-style:solid; border-color: black; border-width:3px">
+                <div class="col-md-6" >
                     {% if difficulty == 'easy'%}
-                        <label><h3>{{question_code}}</h3></label>
+                        <label><h3 style="color: lightseagreen">{{question_code}}</h3></label>
                     {% endif %}
                     {% if difficulty == 'amateur'%}
-                        <label><h3>{{question_code}}</h3></label>
+                        <label><h3 style="color:green">{{question_code}}</h3></label>
                     {% endif %}
                     {% if difficulty == 'hard'%}
-                        <label><h3>{{question_code}}</h3></label>
+                        <label><h3 style="color: darkred">{{question_code}}</h3></label>
                     {% endif %}
                 </div>
           </div>
@@ -125,12 +125,12 @@
           <div class="mh-100" style="width:4%;"></div>
 
           {% if difficulty == 'easy'%}
-            <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
+            <div class="mh-100 rounded" style="width:48%; height:320px; background-color:#eee; border-style:solid; border-color: black; border-width:3px">
                 <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
                 {% for row in choose: %}
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
-                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
+                      <label class="form-check-label" for="flexRadioDefault1" style="color: lightseagreen">{{choose[loop.index-1][0]}}</label>
                     </div>
                         <input type="hidden" name="question_id" value={{level}}>
                     {% endfor %}
@@ -141,12 +141,12 @@
           {% endif %}
 
           {% if difficulty == 'amateur'%}
-          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
+          <div class="mh-100 rounded" style="width:48%; height:320px; background-color:#eee; border-style:solid; border-color: black; border-width:3px ">
                 <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
                 {% for row in choose: %}
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
-                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
+                      <label class="form-check-label" for="flexRadioDefault1" style="color: green">{{choose[loop.index-1][0]}}</label>
                     </div>
                         <input type="hidden" name="question_id" value={{level}}>
                     {% endfor %}
@@ -157,12 +157,12 @@
           {% endif %}
 
           {% if difficulty == 'hard':%}
-          <div class="mh-100" style="width:48%; height:320px; background-color:#eee; border-style: double;">
+          <div class="mh-100 rounded" style="width:48%; height:320px; background-color:#eee; border-style:solid; border-color: black; border-width:3px">
                 <form name="save" class="rounded" style="width:100%;" method="POST" action="/gamesaved">
                 {% for row in choose: %}
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
-                      <label class="form-check-label" for="flexRadioDefault1">{{choose[loop.index-1][0]}}</label>
+                      <label class="form-check-label" for="flexRadioDefault1" style="color: darkred">{{choose[loop.index-1][0]}}</label>
                     </div>
                         <input type="hidden" name="question_id" value={{level}}>
                     {% endfor %}

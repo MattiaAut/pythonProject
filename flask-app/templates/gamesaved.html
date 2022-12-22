@@ -37,12 +37,15 @@
             <p name="text">Question Text:{{question_text}}</p>
             {% block content %}
             {% if score > 50: %}
+                <p name="score" style="color:green">CORRECT ANSWER</p>
                 <p name="score" style="color:green">Score: {{score}}</p>
             {%else: %}
+                <p name="score" style="color:red">WRONG ANSWER</p>
                 <p name="score" style="color:red">Score :{{score}}</p>
+                <p name="score" style="color:red">Correct answer: {{correct}}</p>
             {%endif%}
             {%endblock%}
-            <p name="choose">Choose: {{choose}}</p>
+            <p name="choose">Your Answer: {{choose}}</p>
             <p name="timespent">Time spent: {{timespent}}</p>
             <div>
                 <div class="row" style="width:100%">

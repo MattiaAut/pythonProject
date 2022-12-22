@@ -104,3 +104,16 @@ a{
 p{
     font-family: "DisposableDroidBB", sans-serif;
 }
+
+#easy{
+    color: lightseagreen;
+    font-family: "DisposableDroidBB", sans-serif;
+}
+#amateur{
+    color: green;
+    font-family: "DisposableDroidBB", sans-serif;
+}
+#hard{
+    color: darkred;
+    font-family: "DisposableDroidBB", sans-serif;
+}
