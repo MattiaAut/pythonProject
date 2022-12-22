@@ -28,11 +28,16 @@
     <meta name="msapplication-TileImage" content="">
     <meta name="msapplication-TileColor" content="#cc194b">
 </head>
-<body style="background-color:black;">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/protected_area"><img src="{{ url_for('static', filename='images/logo.png') }}" style="width:18%"></a>
+      <div class="pagination justify-content-end" style="width:100%; height:100%">
+          </div>
+    </nav>
     <div id="main-container">
         <center>
-        <h2>About us</h2>
-        <div class="mh-100 rounded" style="width: 450px; height:450px; background-color:#eee; border-style: solid; border-color: lightseagreen; border-width: 3px;">
+        <h2 style="color: black">About us</h2>
+        <div class="mh-100 rounded" style="width: 450px; height:450px; background-color:#eee; border-style: solid; border-color: black; border-width: 3px;">
             <br><img style="width: 225px; height:225px;" src="{{url_for('static', filename='aboutus.png')}}"/>
             <p>We are two university students of Uniparthenope.<br>
             We started work together to FrontlineCode for an exam and we liked the final result.<br>
@@ -44,5 +49,33 @@
         </center>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <footer style="position:fixed" class="bg-dark text-center text-white" id="footer">
+            <div class="container p-4 pb-0">
+                <!-- Section: Social media -->
+                <section>
+                    <!-- Facebook -->
+                    <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" href="!" role="button">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <!-- Instagram -->
+                    <a class="btn text-white btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button">
+                        <i class="fab fa-instagram me"></i>
+                    </a>
+                    <!-- Github -->
+                    <a class="btn text-white btn-floating m-1" style="background-color: #333333;" href="#!" role="button">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </section>
+                <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                <a style='font-family: "DisposableDroidBB", sans-serif;' href="#">© 2022 Copyright:FrontlineCode</a>
+            </div>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        </footer>
 </body>
 </html>

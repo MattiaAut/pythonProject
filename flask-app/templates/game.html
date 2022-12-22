@@ -77,8 +77,8 @@
   <div id="main-container">
       {% block content %}
       {%if difficulty == 'easy':%}
-        <h1 align="center" style="text-transform: uppercase; color:lightseagreen;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
-      <center><h3 style="color:lightseagreen;">Question: {{question_text}} </h3></center>
+        <h1 align="center" style="text-transform: uppercase; color:blue;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
+      <center><h3 style="color:blue;">Question: {{question_text}} </h3></center>
       {% endif %}
       {%if difficulty == 'amateur':%}
         <h1 align="center" style="text-transform: uppercase; color:green;">LEVEL {{level}}: {{difficulty}}<br><p id="countdown">{{question_time}}</p></h1>
@@ -91,9 +91,9 @@
 
       <div class="row" id="main-container">
           {% if difficulty == 'easy'%}
-          <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">QUESTION CODE</h2></center></div>
+          <div class="mh-100" style="width:48%;"><center><h2 style="color: blue">QUESTION CODE</h2></center></div>
           <div class="mh-100" style="width:4%;"></div>
-            <div class="mh-100" style="width:48%;"><center><h2 style="color: lightseagreen">TAKE A CHOICE</h2></center></div>
+            <div class="mh-100" style="width:48%;"><center><h2 style="color: blue">TAKE A CHOICE</h2></center></div>
           {% endif %}
 
           {% if difficulty == 'amateur'%}
@@ -111,7 +111,7 @@
           <div class="mh-100 rounded" style="width:48%; height:320px; background-color:#eee; border-style:solid; border-color: black; border-width:3px">
                 <div class="col-md-6" >
                     {% if difficulty == 'easy'%}
-                        <label><h3 style="color: lightseagreen">{{question_code}}</h3></label>
+                        <label><h3 style="color: blue">{{question_code}}</h3></label>
                     {% endif %}
                     {% if difficulty == 'amateur'%}
                         <label><h3 style="color:green">{{question_code}}</h3></label>
@@ -130,7 +130,7 @@
                 {% for row in choose: %}
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="choose" id="flexRadioDefault1" value="{{choose[loop.index-1][0]}}">
-                      <label class="form-check-label" for="flexRadioDefault1" style="color: lightseagreen">{{choose[loop.index-1][0]}}</label>
+                      <label class="form-check-label" for="flexRadioDefault1" style="color: blue">{{choose[loop.index-1][0]}}</label>
                     </div>
                         <input type="hidden" name="question_id" value={{level}}>
                     {% endfor %}

@@ -38,7 +38,7 @@
     {% endwith %}
     {% block body %}{% endblock %}
 </head>
-<body style="background-color:black;">
+<body>
 {% if error %}
 <div class="alert warning">
     <span class="closebtn">&times;</span>
@@ -58,13 +58,13 @@ for (i = 0; i < close.length; i++) {
 </script>
 {% endif %}
 <center>
-<h2>Please Insert an username</h2>
+<h2 style="color: black">Please Insert an username</h2>
 <div class="mh-100" style="width: 350px; height:200px; background-color:#eee; border-style: double;">
-	<h2>Username: {{username}} </h2>
+	<h2 style="color: black">Username: {{username}} </h2>
     <form name="first_username_insert" class="needs-validation" METHOD="post" ACTION="/new_username">
 	<div class="form-col">
         <div class="col-md-9 mb-2 ">
-			<label for="username" style="color: deepskyblue;"><h2> New Username</h2></label>
+			<label for="username" style="color: black"><h2 style="color: black"> New Username</h2></label>
 			<input type="text"  required class="form-control" name="username" id="username" placeholder="Insert an Username" style='font-family: "DisposableDroidBB", sans-serif;'>
             <!--<span id="message1"></span>-->
         </div>
