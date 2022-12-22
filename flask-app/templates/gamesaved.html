@@ -33,14 +33,29 @@
         <center>
         <h2></h2>
         <div class="mh-100" style="width: 450px; height:450px; background-color:#eee; border-style: solid; border-color: deepskyblue; border-width: 3px;">
-            <p>Level: {{level}}</p>
-            <p>Question Text:{{question_text}}</p>
-            <p>Score: {{score}}</p>
-            <p>Choose: {{choose}}</p>
-            <p>Time spent: {{timespent}}</p>
+            <p name="level">Level: {{level}}</p>
+            <p name="text">Question Text:{{question_text}}</p>
+            {% block content %}
+            {% if score > 50: %}
+                <p name="score" style="color:green">Score: {{score}}</p>
+            {%else: %}
+                <p name="score" style="color:red">Score :{{score}}</p>
+            {%endif%}
+            {%endblock%}
+            <p name="choose">Choose: {{choose}}</p>
+            <p name="timespent">Time spent: {{timespent}}</p>
             <div>
-                <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Home</button></a>
-                <a href='/game'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Replay</button></a>
+                <div class="row" style="width:100%">
+                    <div class="col-sm-6">
+                        <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Home</button></a>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <form name="level-form" id="level-form" class="needs-validation" METHOD="GET" ACTION="/game">
+                            <button type='submit' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark' value="{{level}}" name="level">Replay</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         </center>

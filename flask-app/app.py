@@ -229,7 +229,7 @@ def gamesaved():
 
                 cursor = mysql.connection.cursor()
                 cursor.execute(
-                    '''INSERT INTO PLAYS(UserEmail,QuestionId,GameScore,DatePlayed,UserInput,TimeSpent ) VALUES( "%s","%s","%s",CURRENT_DATE,"%s","%s")''' % (session["email"], level, score, choose, question_time - time )
+                    '''INSERT INTO PLAYS(UserEmail,QuestionId,GameScore,DatePlayed,UserInput,TimeSpent ) VALUES( "%s","%s","%s",NOW(),"%s","%s")''' % (session["email"], level, score, choose, question_time - time )
                 )
                 mysql.connection.commit()
                 cursor.close()
