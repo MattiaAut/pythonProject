@@ -353,6 +353,39 @@ def insertchoose():
                 cursor.close()
                 return redirect("/query")
 
+@app.route("/change_username")
+def change_username():
+    global error
+    if error == "no_error":
+        return render_template("change_username.html", username=session["username"])
+    else:
+        new_error = error
+        error = "no_error"
+        return render_template("change_username.html", error=new_error, username=session["username"])
+
+@app.route("/new_username", methods=['GET', 'POST'])
+def new_username():
+    global error
+    if request.method == 'POST':
+        form_data = request.form.get("username")
+
+    username_choosed = form_data
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT COUNT(*) AS QUANTITY FROM USER WHERE USERNAME = "%s"''' %username_choosed)
+    result = cursor.fetchone()
+    cursor.close()
+    if result[0] > 0:
+        error = "Username already used"
+        return redirect("/change_username")
+    else:
+        error="no_error"
+        session["username"] = username_choosed
+        cursor = mysql.connection.cursor()
+        cursor.execute('''UPDATE USER SET Username= "%s" WHERE UserEmail="%s"''' %(session["username"], session["email"]) )
+        mysql.connection.commit()
+        cursor.close()
+        return redirect("/protected_area")
+
 @app.route("/logout")
 def logout():
     session.clear()
