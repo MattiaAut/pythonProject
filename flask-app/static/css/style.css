@@ -2,6 +2,9 @@
             font-family: "DisposableDroidBB";
             src: url("/static/fonts/DisposableDroidBB.ttf");
 }
+body {
+  background-color: darkgray;
+}
 
 #main-container{
     margin-left : 20px;
