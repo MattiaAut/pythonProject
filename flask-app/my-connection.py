@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS QUESTION
 create_table_choose="""
 CREATE TABLE IF NOT EXISTS CHOOSE
 (
-    ChooseText   varchar(200)     NOT NULL,
+    ChooseText   varchar(300)     NOT NULL,
     QuestionId  int     NOT NULL,
     Correct     int     NOT NULL,
     CONSTRAINT Choose_pk PRIMARY KEY (ChooseText,QuestionId),
@@ -147,6 +147,11 @@ INSERT INTO CHOOSE VALUES("if(a>b) max=a; else max=b; return max;","1","1");
 insert_choose4="""
 INSERT INTO CHOOSE VALUES("if(a<b) max=a; else max=b; return max;","1","0");
 """
+
+insert_choose5="""
+INSERT INTO CHOOSE VALUES("for(i=0;i<4; i++) {m=i; for(j=i+1; j<5; j++) if(a[j]<a[min]) m=j; t=a[m]; a[m]=a[i]; a[i]=t;}","3","1");
+"""
+
 best_game_view="""
       CREATE VIEW bestgame AS 
       SELECT COUNT(*) AS QUANTI, QuestionId, UserEmail
@@ -175,6 +180,7 @@ execute_query(connection_database, insert_choose1)
 execute_query(connection_database, insert_choose2)
 execute_query(connection_database, insert_choose3)
 execute_query(connection_database, insert_choose4)
+execute_query(connection_database, insert_choose5)
 execute_query(connection_database, best_game_view)
 
 
