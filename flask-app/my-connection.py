@@ -46,6 +46,8 @@ def create_db_connection(host_name, user_name, user_password, db_name):
     print(f"Error: '{err}'")
   return connection_database
 #END OF FUNCTION--------------------------------------------------------------------------
+drop_db="""DROP DATABASE FRONTLINECODE;"""
+
 create_table_user="""
 CREATE TABLE IF NOT EXISTS USER
 (   
@@ -144,8 +146,14 @@ INSERT INTO CHOOSE VALUES("if(a>b) max=a; else max=b; return max;","1","1");
 insert_choose4="""
 INSERT INTO CHOOSE VALUES("if(a<b) max=a; else max=b; return max;","1","0");
 """
+best_game_view="""
+      CREATE VIEW bestgame AS 
+      SELECT COUNT(*) AS QUANTI, QuestionId, UserEmail
+      FROM PLAYS
+      GROUP BY UserEmail, QuestionId"""
 
 connection_server= create_server_connection ("localhost", "root","")
+execute_query(connection_database, drop_db)
 create_db_query="CREATE DATABASE IF NOT EXISTS frontlinecode"
 create_database(connection_server,create_db_query)
 connection_database = create_db_connection("localhost", "root", "", "frontlinecode")
@@ -166,4 +174,6 @@ execute_query(connection_database, insert_choose1)
 execute_query(connection_database, insert_choose2)
 execute_query(connection_database, insert_choose3)
 execute_query(connection_database, insert_choose4)
+execute_query(connection_database, best_game_view)
+
 

@@ -102,7 +102,6 @@ def callback():
         session["username"] = result[0]
     else:
         return redirect("/choose_username")
-
     return redirect("/protected_area")
 
 @app.route('/sw.js', methods=['GET'])
@@ -198,7 +197,6 @@ def gamesaved():
                 cursor.execute(
                     '''SELECT QuestionTime, QuestionText FROM QUESTION WHERE QuestionId="%s" ''' %level)
                 question = cursor.fetchall()
-                print(question)
                 question_time_tuple = question[0]
                 question_text=question_time_tuple[1]
                 cursor.close()
@@ -246,7 +244,32 @@ def profile():
         if session["username"] is None:
             abort(401)
         else:
-            return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"])
+            cursor = mysql.connection.cursor()
+            cursor.execute('''SELECT COUNT(*) FROM PLAYS WHERE UserEmail = "%s"''' % (session["email"]))
+            game_played= cursor.fetchone()
+            cursor.close()
+            cursor = mysql.connection.cursor()
+            cursor.execute('''SELECT b.QuestionId
+                                FROM bestgame b WHERE b.QUANTI = (SELECT MAX(c.QUANTI) FROM bestgame c) 
+                                AND b.UserEmail="%s"''' % (session["email"]))
+            level = cursor.fetchone()
+            cursor.close()
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                '''SELECT QuestionText FROM QUESTION WHERE QuestionId="%s" ''' % level)
+            favorite_game = cursor.fetchone()
+            cursor.close()
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                '''SELECT AVG(GameScore) FROM PLAYS WHERE UserEmail="%s" ''' % (session["email"]))
+            AVG = cursor.fetchone()
+            cursor.close()
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                '''SELECT MAX(GameScore) FROM PLAYS WHERE UserEmail="%s" ''' % (session["email"]))
+            best_score = cursor.fetchone()
+            cursor.close()
+            return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], game_played=game_played[0], favorite_game=favorite_game[0], level=level[0], AVG=AVG[0], best_score=best_score[0])
 @app.route("/query")
 def query():
 

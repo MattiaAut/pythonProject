@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>FrontlineCode</title>
     <meta charset="UTF-8">
@@ -31,23 +31,39 @@
 <body style="background-color:black;">
     <center>
     <h2>Account Information</h2>
-    <div class="mh-100" style="width: 350px; height:250px; background-color:#eee; border-style: double;">
+    <div class="mh-100" style="width: 500px; height:450px; background-color:#eee; border-style: double;">
         <div class="form-col">
             <h2>Your Data</h2>
-            <div class="col-md-11 mb-1 ">
+            <div class="col-md-11 mb-3 ">
                 <label for="Picture"><img src={{picture}} width="45" height="45px" class="rounded-circle" style="margin-top:5px"></label>
             </div>
 
-            <div class="col-md-11 mb-1 ">
-                <label for="Username">Username: {{username}} </label>
-            </div>
-
-            <div class="col-md-11 mb-1">
-                <label for="Email">Email: {{email}} </label>
+            <div class="col-md-11 mb-3">
+                <label for="Username">Username: {{username}}</label>
             </div>
 
             <div class="col-md-11 mb-3">
-                    <a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Exit</button></a>
+                <label for="email">Email: {{email}}</label>
+            </div>
+
+            <div class="col-md-11 mb-3">
+                <label for="gameplayed">GamePlayed: {{game_played}} </label>
+            </div>
+
+            <div class="col-md-11 mb-3">
+                <label for="Average scores">Average score: {{AVG}} </label>
+            </div>
+
+            <div class="col-md-11 mb-3">
+                <label for="Best score">Best score: {{best_score}} </label>
+            </div>
+
+            <div class="col-md-11 mb-3">
+                <label for="favoritegame">Favorite Game: {{favorite_game}} {{level}}° level</label>
+            </div>
+
+            <div class="col-md-11 mb-3">
+                    <label for="exit"><a href='/protected_area'><button type='button' style='height:38px; font-family: "DisposableDroidBB", sans-serif;' class='btn btn-outline-dark'>Exit</button></a></label>
             </div>
         </div>
     </div>
