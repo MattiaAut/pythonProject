@@ -152,6 +152,10 @@ insert_choose5="""
 INSERT INTO CHOOSE VALUES("for(i=0;i<4; i++) {m=i; for(j=i+1; j<5; j++) if(a[j]<a[min]) m=j; t=a[m]; a[m]=a[i]; a[i]=t;}","3","1");
 """
 
+insert_choose6="""
+INSERT INTO CHOOSE VALUES("if(a>b) min=a; else min=b; return min;","2","0");
+"""
+
 best_game_view="""
       CREATE VIEW bestgame AS 
       SELECT COUNT(*) AS QUANTI, QuestionId, UserEmail
@@ -181,6 +185,7 @@ execute_query(connection_database, insert_choose2)
 execute_query(connection_database, insert_choose3)
 execute_query(connection_database, insert_choose4)
 execute_query(connection_database, insert_choose5)
+execute_query(connection_database, insert_choose6)
 execute_query(connection_database, best_game_view)
 
 

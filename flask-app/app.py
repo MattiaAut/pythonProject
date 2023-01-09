@@ -286,7 +286,7 @@ def profile():
                 '''SELECT MAX(GameScore) FROM PLAYS WHERE UserEmail="%s" ''' % (session["email"]))
             best_score = cursor.fetchone()
             cursor.close()
-            return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], game_played=game_played[0], favorite_game=favorite_game[0], level=level[0], AVG=AVG[0], best_score=best_score[0])
+            return render_template('profile.html',name=session["name"], email=session["email"], picture=session["photo"],username=session["username"], game_played=game_played[0], favorite_game=favorite_game[0], level=level[0], AVG=round(AVG[0],2), best_score=best_score[0])
 @app.route("/query")
 def query():
 
